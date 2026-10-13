@@ -249,4 +249,115 @@ function renderContributionsTable(data) {
         tbody.appendChild(tr);
     });
 
-    table.appendChild
+    table.appendChild(tbody);
+}
+
+/* RENDER DEDUCTIONS */
+function renderDeductionsTable(data) {
+    const table = document.getElementById("deductionsTable");
+    table.className = "deductions-table";
+    table.innerHTML = "";
+
+    const { months, deductions } = data;
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    ["Description of Expense", ...months].forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    deductions.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = row.description;
+        tr.appendChild(tdDesc);
+
+        row.values.forEach((v, idx) => {
+            const td = document.createElement("td");
+            td.textContent = Math.abs(v) || "";
+            td.style.backgroundColor = monthColours[idx % 2];
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+}
+
+/* RENDER TOTALS */
+function renderTotalsTable(data) {
+    const table = document.getElementById("totalsTable");
+    table.className = "totals-table";
+    table.innerHTML = "";
+
+    const { months, contribTotals, deductTotals, netTotals, cumulative } = data;
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    ["Metric", ...months].forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    addTotalsRow(tbody, "Total Contributions", contribTotals, "total-contrib");
+    addTotalsRow(tbody, "Total Deductions", deductTotals.map(v => Math.abs(v)), "total-deduct");
+    addTotalsRow(tbody, "Net (Contrib - Deduct)", netTotals, "total-net");
+    addTotalsRow(tbody, "Cumulative", cumulative, "total-cum");
+
+    table.appendChild(tbody);
+}
+
+/* ADD TOTAL ROW */
+function addTotalsRow(tbody, metric, values, className) {
+    const tr = document.createElement("tr");
+    tr.classList.add(className);
+
+    const tdMetric = document.createElement("td");
+    tdMetric.textContent = metric;
+    tr.appendChild(tdMetric);
+
+    values.forEach(v => {
+        const td = document.createElement("td");
+        td.textContent = v || "";
+        tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+}
+
+/* SEARCH */
+function filterContributions() {
+    const search = document.getElementById("searchBox").value.toLowerCase();
+
+    const filtered = currentYearData.contributions.filter(r =>
+        r.house.toLowerCase().includes(search) ||
+        r.name.toLowerCase().includes(search)
+    );
+
+    const filteredData = {
+        ...currentYearData,
+        contributions: filtered
+    };
+
+    renderContributionsTable(filteredData);
+    renderDeductionsTable(currentYearData);
+    renderTotalsTable(currentYearData);
+}
+

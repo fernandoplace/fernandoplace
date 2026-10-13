@@ -83,6 +83,65 @@ h1 {
 }
 
 /* --------------------------------------------------
+   HOME IMAGE FADE-IN (RESTORED)
+-------------------------------------------------- */
+.home-image {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInImage 1.2s ease-out forwards;
+}
+
+@keyframes fadeInImage {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------------------------
+   CONTROLS (RESTORED DROPDOWN STYLE)
+-------------------------------------------------- */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+select {
+    background: rgba(11,107,82,0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 140px;
+}
+
+input {
+    background: rgba(255,255,255,0.07);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 250px;
+}
+
+.section-title {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #cbd5f5;
+}
+
+/* --------------------------------------------------
    TABLE BASE
 -------------------------------------------------- */
 .table-container {
@@ -131,8 +190,8 @@ table thead th {
 /* Name column (now column 1) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 250px;
+    max-width: 250px;
     position: sticky;
     left: 0;
     z-index: 8;

@@ -1,18 +1,36 @@
 const SHEET_ID = "1eOEnOQbtexTGvAChflSpap6R_zzDQwa1ccfp4bhNfwU";
 
-let currentRaw = [];
-let sep2023Cumulative = 0;
+let currentYear = null;
+let currentYearData = null; // { months, contributions, deductions, totals }
+let globalTotals = null;    // { months, contribTotals, deductTotals, netTotals, cumulative }
+
+const monthColours = ["#2948b8", "#0b6b52"];
 
 document.addEventListener("DOMContentLoaded", async () => {
     await buildYearDropdown();
-    document.getElementById("searchBox").addEventListener("input", filterTables);
+
+    const searchBox = document.getElementById("searchBox");
+    if (searchBox) {
+        searchBox.addEventListener("input", filterContributions);
+    }
 });
 
 function showTab(tabId) {
-    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
-    document.getElementById(tabId).classList.add("active");
-    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add("active");
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(tab => tab.classList.remove("active"));
+
+    document
+        .querySelectorAll(".tab-button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    document
+        .getElementById(tabId)
+        .classList.add("active");
+
+    document
+        .querySelector(`[onclick="showTab('${tabId}')"]`)
+        .classList.add("active");
 }
 
 async function buildYearDropdown() {
@@ -21,154 +39,433 @@ async function buildYearDropdown() {
     dropdown.innerHTML = "";
 
     years.forEach(year => {
-        const opt = document.createElement("option");
-        opt.value = year;
-        opt.textContent = year;
-        dropdown.appendChild(opt);
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        dropdown.appendChild(option);
     });
 
-    const latest = years[years.length - 1];
-    dropdown.value = latest;
+    const latestYear = years[years.length - 1];
+    dropdown.value = latestYear;
 
     dropdown.addEventListener("change", () => loadSheet(dropdown.value));
-    loadSheet(latest);
+
+    await loadSheet(latestYear);
 }
 
 async function getYears() {
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Years&tqx=out:json`;
-    const res = await fetch(url);
-    const txt = await res.text();
-    const json = JSON.parse(txt.substring(47).slice(0, -2));
-    return json.table.rows.map(r => r.c[0]?.v).filter(Boolean).map(String);
+    const response = await fetch(url);
+    const text = await response.text();
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+
+    return json.table.rows
+        .map(row => row.c[0]?.v)
+        .filter(Boolean)
+        .map(String);
 }
 
-async function getSheetData(sheetName) {
+async function getRawSheetJson(sheetName) {
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${sheetName}&tqx=out:json`;
-    const res = await fetch(url);
-    const txt = await res.text();
-    const json = JSON.parse(txt.substring(47).slice(0, -2));
+    const response = await fetch(url);
+    const text = await response.text();
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    return json;
+}
 
-    const headers = ["House_no", "Income_source_deduction"];
-    json.table.cols.slice(2).forEach(col => headers.push(col.label || ""));
+function getMonthLabels(json, year) {
+    // cols: 0 = House_no, 1 = Income_source_deduction, 2+ = months
+    const cols = json.table.cols.slice(2);
+    return cols.map(col => {
+        const base = (col.label || "").trim();
+        if (!base) return "";
+        return `${base} ${year}`;
+    });
+}
 
-    const data = [headers];
+function parseYearData(json, year) {
+    const months = getMonthLabels(json, year);
 
-    json.table.rows.forEach(row => {
-        const vals = row.c.map(c => (c && c.v !== null ? c.v : ""));
-        data.push(vals);
+    const rows = json.table.rows;
+    const contributions = [];
+    const deductions = [];
+
+    let inDeductions = false;
+    let stopDeductions = false;
+
+    let cumulativeStartSep2023 = null;
+
+    rows.forEach(row => {
+        const cells = row.c || [];
+        const house = cells[0]?.v ?? "";
+        const name = cells[1]?.v ?? "";
+
+        const label = String(name).trim();
+
+        if (label === "Deductions") {
+            inDeductions = true;
+            return;
+        }
+
+        if (label === "Total Collection for Month") {
+            stopDeductions = true;
+            return;
+        }
+
+        if (label === "Current Total in Welfare Pot") {
+            // For 2023, Sep (first month col) is starting cumulative
+            if (year === "2023" && months.length > 0) {
+                const sepCell = cells[2]?.v;
+                if (typeof sepCell === "number") {
+                    cumulativeStartSep2023 = sepCell;
+                }
+            }
+            return;
+        }
+
+        // Collect monthly values
+        const values = cells.slice(2).map(c => {
+            const v = c?.v;
+            return typeof v === "number" ? v : 0;
+        });
+
+        if (!inDeductions && !stopDeductions) {
+            // Contributions
+            let houseDisplay = String(house).trim();
+            if (!houseDisplay || houseDisplay === "-") {
+                houseDisplay = "Other";
+            }
+            contributions.push({
+                house: houseDisplay,
+                name: String(name).trim(),
+                values
+            });
+        } else if (inDeductions && !stopDeductions) {
+            // Deductions
+            deductions.push({
+                description: String(name).trim(),
+                values
+            });
+        }
     });
 
-    return data;
+    // Compute monthly totals for this year
+    const contribTotals = new Array(months.length).fill(0);
+    const deductTotals = new Array(months.length).fill(0);
+
+    contributions.forEach(row => {
+        row.values.forEach((v, i) => {
+            contribTotals[i] += v;
+        });
+    });
+
+    deductions.forEach(row => {
+        row.values.forEach((v, i) => {
+            deductTotals[i] += v;
+        });
+    });
+
+    const netTotals = contribTotals.map((v, i) => v + deductTotals[i]); // deductions are negative
+
+    return {
+        year,
+        months,
+        contributions,
+        deductions,
+        contribTotals,
+        deductTotals,
+        netTotals,
+        cumulativeStartSep2023
+    };
 }
 
 async function loadSheet(year) {
-    document.getElementById("yearTitle").textContent = `Displaying Data for ${year}`;
+    currentYear = year;
 
-    currentRaw = await getSheetData(year);
+    document.getElementById("yearTitle").textContent =
+        `Displaying Data for ${year}`;
 
-    if (year === "2023") {
-        sep2023Cumulative = extractSep2023Cumulative(currentRaw);
+    const json = await getRawSheetJson(year);
+    const yearData = parseYearData(json, year);
+    currentYearData = yearData;
+
+    // Build global totals across all years (for Grand Totals)
+    await buildGlobalTotals();
+
+    renderContributionsTable(yearData);
+    renderDeductionsTable(yearData);
+    renderTotalsTable(globalTotals);
+}
+
+async function buildGlobalTotals() {
+    const years = await getYears();
+
+    const allMonths = [];
+    const allContribTotals = [];
+    const allDeductTotals = [];
+    const allNetTotals = [];
+
+    let cumulativeStart = null;
+
+    for (const y of years) {
+        const json = await getRawSheetJson(y);
+        const yd = parseYearData(json, y);
+
+        // For 2023, capture starting cumulative from Sep 2023
+        if (y === "2023" && yd.cumulativeStartSep2023 != null) {
+            cumulativeStart = yd.cumulativeStartSep2023;
+        }
+
+        yd.months.forEach((m, idx) => {
+            allMonths.push(m);
+            allContribTotals.push(yd.contribTotals[idx]);
+            allDeductTotals.push(yd.deductTotals[idx]);
+            allNetTotals.push(yd.netTotals[idx]);
+        });
     }
 
-    const { contributions, deductions } = splitData(currentRaw);
-    const totals = computeTotals(contributions, deductions, year);
-
-    renderTable(contributions, "contribTable");
-    renderTable(deductions, "deductTable");
-    renderTable(totals, "totalTable");
-}
-
-function extractSep2023Cumulative(data) {
-    const idx = data.findIndex(r => String(r[1]).toLowerCase().includes("current total in welfare pot"));
-    return Number(data[idx][2]) || 0;
-}
-
-function splitData(data) {
-    const deductStart = data.findIndex(r => String(r[1]).toLowerCase().includes("deductions"));
-    const deductEnd = data.findIndex(r => String(r[1]).toLowerCase().includes("total collection for month"));
-
-    const contributions = data.slice(1, deductStart);
-    const deductions = data.slice(deductStart + 1, deductEnd);
-
-    return { contributions, deductions };
-}
-
-function computeTotals(contrib, deduct, year) {
-    const headers = contrib[0].slice(2);
-
-    const totalContrib = ["Total Contributions", ""];
-    const totalDeduct = ["Total Deductions", ""];
-    const net = ["Net (Contrib - Deduct)", ""];
-    const cumulative = ["Cumulative", ""];
-
-    let running = year === "2023" ? sep2023Cumulative : cumulativeCarryForward();
-
-    for (let c = 2; c < contrib[0].length; c++) {
-        let sumC = 0, sumD = 0;
-
-        contrib.forEach((row, idx) => {
-            if (idx > 0) sumC += Number(row[c]) || 0;
-        });
-
-        deduct.forEach(row => {
-            sumD += Number(row[c]) || 0;
-        });
-
-        totalContrib.push(sumC);
-        totalDeduct.push(sumD);
-
-        const netVal = sumC - sumD;
-        net.push(netVal);
-
-        running += netVal;
-        cumulative.push(running);
+    // Build cumulative across all months
+    const cumulative = new Array(allMonths.length).fill(0);
+    if (cumulativeStart == null) {
+        cumulativeStart = 0;
     }
 
-    return [
-        ["Metric", "Label", ...headers],
-        totalContrib,
-        totalDeduct,
-        net,
+    for (let i = 0; i < allMonths.length; i++) {
+        if (i === 0) {
+            // First month (Sep 2023) uses starting cumulative
+            cumulative[i] = cumulativeStart;
+        } else {
+            cumulative[i] = cumulative[i - 1] + allNetTotals[i];
+        }
+    }
+
+    globalTotals = {
+        months: allMonths,
+        contribTotals: allContribTotals,
+        deductTotals: allDeductTotals,
+        netTotals: allNetTotals,
         cumulative
-    ];
+    };
 }
 
-function cumulativeCarryForward() {
-    return sep2023Cumulative;
-}
-
-function renderTable(data, tableId) {
-    const table = document.getElementById(tableId);
+function renderContributionsTable(yearData) {
+    const table = document.getElementById("contributionsTable");
+    if (!table) return;
     table.innerHTML = "";
 
-    data.forEach((row, rowIndex) => {
+    const { months, contributions } = yearData;
+
+    // Header
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    const hHouse = document.createElement("th");
+    hHouse.textContent = "House Number";
+    headerRow.appendChild(hHouse);
+
+    const hName = document.createElement("th");
+    hName.textContent = "Name";
+    headerRow.appendChild(hName);
+
+    months.forEach((m, idx) => {
+        const th = document.createElement("th");
+        th.textContent = m;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    contributions.forEach(row => {
         const tr = document.createElement("tr");
 
-        row.forEach((cell, colIndex) => {
-            const el = document.createElement(rowIndex === 0 ? "th" : "td");
-            el.textContent = cell;
-            tr.appendChild(el);
+        const tdHouse = document.createElement("td");
+        tdHouse.textContent = row.house;
+        tr.appendChild(tdHouse);
+
+        const tdName = document.createElement("td");
+        tdName.textContent = row.name;
+        tr.appendChild(tdName);
+
+        row.values.forEach((v, idx) => {
+            const td = document.createElement("td");
+            td.textContent = v ? v : "";
+            // Month color alternation
+            td.style.backgroundColor = monthColours[idx % monthColours.length];
+            tr.appendChild(td);
         });
 
-        table.appendChild(tr);
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+}
+
+function renderDeductionsTable(yearData) {
+    const table = document.getElementById("deductionsTable");
+    if (!table) return;
+    table.innerHTML = "";
+
+    const { months, deductions } = yearData;
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    const hDesc = document.createElement("th");
+    hDesc.textContent = "Description of Expense";
+    headerRow.appendChild(hDesc);
+
+    months.forEach((m, idx) => {
+        const th = document.createElement("th");
+        th.textContent = m;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    deductions.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = row.description;
+        tr.appendChild(tdDesc);
+
+        row.values.forEach((v, idx) => {
+            const td = document.createElement("td");
+            td.textContent = v ? v : "";
+            td.style.backgroundColor = monthColours[idx % monthColours.length];
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+}
+
+function renderTotalsTable(totals) {
+    const table = document.getElementById("totalsTable");
+    if (!table) return;
+    table.innerHTML = "";
+
+    const { months, contribTotals, deductTotals, netTotals, cumulative } = totals;
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    const hMetric = document.createElement("th");
+    hMetric.textContent = "Metric";
+    headerRow.appendChild(hMetric);
+
+    const hLabel = document.createElement("th");
+    hLabel.textContent = "Label";
+    headerRow.appendChild(hLabel);
+
+    months.forEach(m => {
+        const th = document.createElement("th");
+        th.textContent = m;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    // Total Contributions
+    const trContrib = document.createElement("tr");
+    trContrib.classList.add("total-contrib");
+    addTotalsRow(trContrib, "Total Contributions", "", contribTotals);
+    tbody.appendChild(trContrib);
+
+    // Total Deductions
+    const trDeduct = document.createElement("tr");
+    trDeduct.classList.add("total-deduct");
+    addTotalsRow(trDeduct, "Total Deductions", "", deductTotals);
+    tbody.appendChild(trDeduct);
+
+    // Net
+    const trNet = document.createElement("tr");
+    trNet.classList.add("total-net");
+    addTotalsRow(trNet, "Net (Contrib - Deduct)", "", netTotals);
+    tbody.appendChild(trNet);
+
+    // Cumulative
+    const trCum = document.createElement("tr");
+    trCum.classList.add("total-cum");
+    addTotalsRow(trCum, "Cumulative", "", cumulative);
+    tbody.appendChild(trCum);
+
+    table.appendChild(tbody);
+}
+
+function addTotalsRow(tr, metricName, label, values) {
+    const tdMetric = document.createElement("td");
+    tdMetric.textContent = metricName;
+    tr.appendChild(tdMetric);
+
+    const tdLabel = document.createElement("td");
+    tdLabel.textContent = label;
+    tr.appendChild(tdLabel);
+
+    values.forEach(v => {
+        const td = document.createElement("td");
+        td.textContent = v ? v : "";
+        tr.appendChild(td);
     });
 }
 
-function filterTables() {
-    const search = document.getElementById("searchBox").value.toLowerCase();
+function filterContributions() {
+    if (!currentYearData) return;
 
-    const { contributions, deductions } = splitData(currentRaw);
+    const search = document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase();
 
-    const filteredContrib = contributions.filter((r, i) =>
-        i === 0 ||
-        String(r[1]).toLowerCase().includes(search) ||
-        String(r[0]).toLowerCase().includes(search)
-    );
+    const { months, contributions, deductions } = currentYearData;
 
-    const totals = computeTotals(filteredContrib, deductions, document.getElementById("yearSelect").value);
+    const filteredContrib = contributions.filter(row => {
+        const h = String(row.house).toLowerCase();
+        const n = String(row.name).toLowerCase();
+        return !search || h.includes(search) || n.includes(search);
+    });
 
-    renderTable(filteredContrib, "contribTable");
-    renderTable(deductions, "deductTable");
-    renderTable(totals, "totalTable");
+    // Recompute totals for this year based on filtered contributions
+    const contribTotals = new Array(months.length).fill(0);
+    const deductTotals = new Array(months.length).fill(0);
+
+    filteredContrib.forEach(row => {
+        row.values.forEach((v, i) => {
+            contribTotals[i] += v;
+        });
+    });
+
+    deductions.forEach(row => {
+        row.values.forEach((v, i) => {
+            deductTotals[i] += v;
+        });
+    });
+
+    const netTotals = contribTotals.map((v, i) => v + deductTotals[i]);
+
+    const filteredYearData = {
+        ...currentYearData,
+        contributions: filteredContrib,
+        contribTotals,
+        deductTotals,
+        netTotals
+    };
+
+    renderContributionsTable(filteredYearData);
+    renderDeductionsTable(filteredYearData);
+
+    // Grand totals remain global (not filtered) – as per your welfare pot logic
+    renderTotalsTable(globalTotals);
 }
 

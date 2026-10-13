@@ -119,11 +119,18 @@ input {
     font-size: 1.4rem;
 }
 
+.section-title {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #cbd5f5;
+}
+
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 30px;
+    margin-bottom: 18px;
 }
 
 table {
@@ -141,13 +148,19 @@ td {
     padding: 12px;
 }
 
-th, td {
+th,
+td {
     text-align: center;
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-th:first-child,
-td:first-child {
+/* Sticky first column for all tables */
+.contributions-table th:first-child,
+.contributions-table td:first-child,
+.deductions-table th:first-child,
+.deductions-table td:first-child,
+.totals-table th:first-child,
+.totals-table td:first-child {
     text-align: left;
     background: #243447;
     font-weight: 600;
@@ -156,17 +169,48 @@ td:first-child {
     z-index: 1;
 }
 
-.total-row td {
-    background: #475569 !important;
-    font-weight: 700;
+/* Contributions: House Number + Name colors */
+.contributions-table th:nth-child(1),
+.contributions-table td:nth-child(1) {
+    background-color: #1e293b;
 }
 
-.cumulative-row td {
-    background: #0f766e !important;
-    font-weight: 700;
+.contributions-table th:nth-child(2),
+.contributions-table td:nth-child(2) {
+    background-color: #0f766e;
 }
+
+/* Deductions: Description column color */
+.deductions-table th:nth-child(1),
+.deductions-table td:nth-child(1) {
+    background-color: #1e293b;
+}
+
+/* Totals table styling */
+.totals-table th {
+    background: #334155;
+}
+
+.totals-table .total-contrib td {
+    background: rgba(59,130,246,0.25);
+}
+
+.totals-table .total-deduct td {
+    background: rgba(220,38,38,0.25);
+}
+
+.totals-table .total-net td {
+    background: rgba(34,197,94,0.25);
+}
+
+.totals-table .total-cum td {
+    background: rgba(15,118,110,0.25);
+}
+
+/* ---------- Mobile ---------- */
 
 @media (max-width: 768px) {
+
     body {
         padding: 12px;
     }
@@ -200,6 +244,10 @@ td:first-child {
 
     #yearTitle {
         font-size: 1.15rem;
+    }
+
+    table {
+        min-width: 100%;
     }
 }
 

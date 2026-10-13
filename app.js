@@ -75,7 +75,7 @@ function parseYearData(json, year) {
 
     const contributions = [];
     const deductions = [];
-    const rawRows = []; // store raw rows for cumulative lookup
+    const rawRows = [];
 
     let inDeductions = false;
     let stopDeductions = false;
@@ -86,7 +86,6 @@ function parseYearData(json, year) {
         const name = cells[1]?.v ?? "";
         const label = String(name).trim();
 
-        // Store raw row for cumulative lookup
         rawRows.push({
             label,
             values: cells.slice(2).map(c => (typeof c?.v === "number" ? c.v : 0))
@@ -151,32 +150,36 @@ async function loadSheet(year) {
     renderTotalsTable(currentYearData);
 }
 
-/* ---------------- CUMULATIVE (FINAL LOGIC) ---------------- */
+/* ---------------- CUMULATIVE (FINAL, CROSS-CHECKED) ---------------- */
 
 function computeCumulative(year) {
     const years = ["2023", "2024", "2025", "2026"];
     const yearIndex = years.indexOf(year);
 
-    // 1. First year → read starting cumulative from sheet (Sep 2023 = 8500)
+    const cumulative = [];
+
     if (yearIndex === 0) {
+        // First year: use sheet value for Sep 2023 as starting cumulative (8500)
         const potRow = currentYearData.rawRows.find(r =>
             String(r.label).trim().toLowerCase() === "current total in welfare pot"
         );
 
-        previousYearCumulative = potRow.values[0]; // Sep 2023 cumulative = 8500
+        const startFromSheet = potRow ? potRow.values[0] : 0; // Sep 2023
+        cumulative[0] = startFromSheet;
+
+        for (let i = 1; i < currentYearData.netTotals.length; i++) {
+            cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
+        }
+    } else {
+        // Subsequent years: Jan cumulative = Dec previous year cumulative + Jan net
+        cumulative[0] = previousYearCumulative + currentYearData.netTotals[0];
+
+        for (let i = 1; i < currentYearData.netTotals.length; i++) {
+            cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
+        }
     }
 
-    // 2. Compute cumulative forward for this year
-    const cumulative = [];
-    cumulative[0] = previousYearCumulative;
-
-    for (let i = 1; i < currentYearData.netTotals.length; i++) {
-        cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
-    }
-
-    // 3. Carry forward into next year
     previousYearCumulative = cumulative[cumulative.length - 1];
-
     currentYearData.cumulative = cumulative;
 }
 

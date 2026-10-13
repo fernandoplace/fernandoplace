@@ -1,96 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fernando Place Welfare Association</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fernando Place Welfare Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+<div class="container">
 
-    <div class="container">
+    <h1>Fernando Place Welfare Dashboard</h1>
 
-        <h1>Fernando Place Welfare Association</h1>
-
-        <div class="tabs">
-            <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
-            <button class="tab-button" data-tab="accounts" onclick="openAccountsTab()">Accounts</button>
-            <button class="tab-button" data-tab="gate" onclick="showTab('gate')">Gate Renovation Project</button>
-            <button class="tab-button" data-tab="committee" onclick="showTab('committee')">Committee & Contacts</button>
-        </div>
-
-        <!-- HOME TAB -->
-        <div id="home" class="tab-content active">
-            <div class="glass-card">
-                <h2>Welcome</h2>
-
-                <p>
-                    Welcome to the official webpage of the <strong>Fernando Place Welfare Association, Colombo‑14</strong>.
-                    This platform keeps our residents informed with welfare updates, monthly financial statements,
-                    renovation project progress, and community announcements.
-                </p>
-
-                <p>
-                    Our goal is to maintain transparency, unity, and trust within our neighbourhood — ensuring
-                    every resident stays connected and informed.
-                </p>
-
-                <img src="lane.jpg" alt="Fernando Place Lane" class="home-image">
-            </div>
-        </div>
-
-        <!-- ACCOUNTS TAB -->
-        <div id="accounts" class="tab-content">
-            <div class="glass-card">
-
-                <div class="controls">
-                    <select id="yearSelect"></select>
-                    <input type="text" id="searchBox" placeholder="Search House or Name">
-                </div>
-
-                <h2 id="yearTitle"></h2>
-
-                <h3 class="section-title">Contributions</h3>
-                <div class="table-container">
-                    <table id="contributionsTable" class="contributions-table"></table>
-                </div>
-
-                <h3 class="section-title">Deductions</h3>
-                <div class="table-container">
-                    <table id="deductionsTable" class="deductions-table"></table>
-                </div>
-
-                <h3 class="section-title">Grand Totals</h3>
-                <div class="table-container">
-                    <table id="totalsTable" class="totals-table"></table>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- GATE TAB -->
-        <div id="gate" class="tab-content">
-            <div class="glass-card">
-                <h2>Gate Renovation Project</h2>
-                <p>Coming soon.</p>
-            </div>
-        </div>
-
-        <!-- COMMITTEE TAB -->
-        <div id="committee" class="tab-content">
-            <div class="glass-card">
-                <h2>Committee & Contacts</h2>
-                <p>Details will be added soon.</p>
-            </div>
-        </div>
-
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
+        <button class="tab-button" data-tab="accounts" onclick="openAccountsTab()">Accounts</button>
+        <button class="tab-button" data-tab="gate" onclick="showTab('gate')">Gate Renovation Project</button>
+        <button class="tab-button" data-tab="committee" onclick="showTab('committee')">Committee & Contacts</button>
+        <button class="tab-button" data-tab="notices" onclick="showTab('notices')">Notices</button>
     </div>
 
-    <script src="app.js?v=100"></script>
+    <!-- HOME TAB -->
+    <div id="home" class="tab-content active">
+        <div class="glass-card">
+            <h2>Welcome</h2>
+            <p>This dashboard provides a clear and transparent view of welfare contributions, deductions, and project updates for Fernando Place.</p>
+            <img src="lane.png" class="home-image" alt="Fernando Place Lane" />
+        </div>
+    </div>
 
+    <!-- ACCOUNTS TAB -->
+    <div id="accounts" class="tab-content">
+        <div class="glass-card">
+            <h2 id="yearTitle">Displaying Data</h2>
+
+            <div class="controls">
+                <select id="yearSelect"></select>
+                <input id="searchBox" type="text" placeholder="Search name or house number..." />
+            </div>
+
+            <!-- CONTRIBUTIONS -->
+            <h3 class="section-title">Contributions</h3>
+            <div class="table-container">
+                <table id="contributionsTable"></table>
+            </div>
+
+            <!-- DEDUCTIONS -->
+            <h3 class="section-title">Deductions</h3>
+            <div class="table-container">
+                <table id="deductionsTable"></table>
+            </div>
+
+            <!-- TOTALS -->
+            <h3 class="section-title">Grand Totals</h3>
+            <div class="table-container">
+                <table id="totalsTable"></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- GATE PROJECT TAB -->
+    <div id="gate" class="tab-content">
+        <div class="glass-card">
+            <h2>Gate Renovation Project</h2>
+            <p>Coming soon — project updates, expenses, and progress tracking will appear here.</p>
+        </div>
+    </div>
+
+    <!-- COMMITTEE TAB -->
+    <div id="committee" class="tab-content">
+        <div class="glass-card">
+            <h2>Committee & Contacts</h2>
+            <p>Coming soon — committee member details and contact information will appear here.</p>
+        </div>
+    </div>
+
+    <!-- NOTICES TAB -->
+    <div id="notices" class="tab-content">
+        <div class="glass-card">
+            <h2>Notices</h2>
+            <p>Coming soon — official notices and announcements will appear here.</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
 </body>
-
 </html>
 

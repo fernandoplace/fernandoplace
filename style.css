@@ -83,65 +83,6 @@ h1 {
 }
 
 /* --------------------------------------------------
-   HOME IMAGE FADE-IN
--------------------------------------------------- */
-.home-image {
-    width: 100%;
-    max-width: 900px;
-    border-radius: 12px;
-    margin-top: 20px;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInImage 1.2s ease-out forwards;
-}
-
-@keyframes fadeInImage {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* --------------------------------------------------
-   CONTROLS
--------------------------------------------------- */
-.controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-select {
-    background: rgba(11,107,82,0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
-    border-radius: 10px;
-    padding: 12px;
-    min-width: 120px;
-}
-
-input {
-    background: rgba(255,255,255,0.07);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    min-width: 250px;
-}
-
-.section-title {
-    margin-top: 18px;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    color: #cbd5f5;
-}
-
-/* --------------------------------------------------
    TABLE BASE
 -------------------------------------------------- */
 .table-container {
@@ -174,7 +115,7 @@ td {
 }
 
 /* --------------------------------------------------
-   STICKY MONTH HEADER (TOP ROW)
+   STICKY MONTH HEADER
 -------------------------------------------------- */
 table thead th {
     position: sticky;
@@ -184,44 +125,32 @@ table thead th {
 }
 
 /* --------------------------------------------------
-   CONTRIBUTIONS — Freeze FIRST TWO columns
+   CONTRIBUTIONS — Freeze ONLY Name column
 -------------------------------------------------- */
 
-/* Column widths */
+/* Name column (now column 1) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
-    min-width: 110px;
-    max-width: 110px;
-}
-
-.contributions-table th:nth-child(2),
-.contributions-table td:nth-child(2) {
-    min-width: 160px;
-    max-width: 160px;
-}
-
-/* Freeze column 1 */
-.contributions-table th:first-child,
-.contributions-table td:first-child {
+    min-width: 300px;
+    max-width: 300px;
     position: sticky;
     left: 0;
-    z-index: 8;
-    background: #1e293b;
-}
-
-/* Freeze column 2 */
-.contributions-table th:nth-child(2),
-.contributions-table td:nth-child(2) {
-    position: sticky;
-    left: 110px;
     z-index: 8;
     background: #0f766e;
 }
 
-/* --------------------------------------------------
-   DEDUCTIONS — Freeze ONLY FIRST column
--------------------------------------------------- */
+/* House Number column (now column 2) */
+.contributions-table th:nth-child(2),
+.contributions-table td:nth-child(2) {
+    min-width: 90px;
+    max-width: 90px;
+    white-space: normal;
+    line-height: 1.2;
+}
 
+/* --------------------------------------------------
+   DEDUCTIONS — Freeze ONLY first column
+-------------------------------------------------- */
 .deductions-table th:first-child,
 .deductions-table td:first-child {
     position: sticky;
@@ -232,9 +161,8 @@ table thead th {
 }
 
 /* --------------------------------------------------
-   GRAND TOTALS — Freeze ONLY FIRST column
+   GRAND TOTALS — Freeze ONLY first column
 -------------------------------------------------- */
-
 .totals-table th:first-child,
 .totals-table td:first-child {
     position: sticky;
@@ -245,7 +173,7 @@ table thead th {
 }
 
 /* --------------------------------------------------
-   TOTALS TABLE COLORS
+   TOTALS COLORS
 -------------------------------------------------- */
 .total-contrib td {
     background: rgba(59,130,246,0.25);

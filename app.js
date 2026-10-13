@@ -125,7 +125,7 @@ function parseYearData(json, year) {
             let houseDisplay = String(house).trim();
             if (!houseDisplay || houseDisplay === "-") houseDisplay = "Other";
 
-            contributions.push({ house: houseDisplay, name: label, values });
+            contributions.push({ name: label, house: houseDisplay, values });
         } else if (inDeductions && !stopDeductions) {
             deductions.push({ description: label, values });
         }
@@ -220,6 +220,7 @@ function computeCumulative(year) {
 
 function renderContributionsTable(data) {
     const table = document.getElementById("contributionsTable");
+    table.className = "contributions-table";
     table.innerHTML = "";
 
     const { months, contributions } = data;
@@ -227,7 +228,7 @@ function renderContributionsTable(data) {
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
 
-    ["House Number", "Name", ...months].forEach(h => {
+    ["Name", "House Number", ...months].forEach(h => {
         const th = document.createElement("th");
         th.textContent = h;
         headerRow.appendChild(th);
@@ -241,13 +242,13 @@ function renderContributionsTable(data) {
     contributions.forEach(row => {
         const tr = document.createElement("tr");
 
-        const tdHouse = document.createElement("td");
-        tdHouse.textContent = row.house;
-        tr.appendChild(tdHouse);
-
         const tdName = document.createElement("td");
         tdName.textContent = row.name;
         tr.appendChild(tdName);
+
+        const tdHouse = document.createElement("td");
+        tdHouse.textContent = row.house;
+        tr.appendChild(tdHouse);
 
         row.values.forEach((v, idx) => {
             const td = document.createElement("td");
@@ -266,6 +267,7 @@ function renderContributionsTable(data) {
 
 function renderDeductionsTable(data) {
     const table = document.getElementById("deductionsTable");
+    table.className = "deductions-table";
     table.innerHTML = "";
 
     const { months, deductions } = data;
@@ -293,7 +295,7 @@ function renderDeductionsTable(data) {
 
         row.values.forEach((v, idx) => {
             const td = document.createElement("td");
-            td.textContent = Math.abs(v) || "";   // <-- REMOVE MINUS SIGN HERE
+            td.textContent = Math.abs(v) || "";
             td.style.backgroundColor = monthColours[idx % 2];
             tr.appendChild(td);
         });
@@ -308,6 +310,7 @@ function renderDeductionsTable(data) {
 
 function renderTotalsTable(data) {
     const table = document.getElementById("totalsTable");
+    table.className = "totals-table";
     table.innerHTML = "";
 
     const { months, contribTotals, deductTotals, netTotals, cumulative } = data;
@@ -327,7 +330,7 @@ function renderTotalsTable(data) {
     const tbody = document.createElement("tbody");
 
     addTotalsRow(tbody, "Total Contributions", contribTotals, "total-contrib");
-    addTotalsRow(tbody, "Total Deductions", deductTotals.map(v => Math.abs(v)), "total-deduct"); // <-- FIXED
+    addTotalsRow(tbody, "Total Deductions", deductTotals.map(v => Math.abs(v)), "total-deduct");
     addTotalsRow(tbody, "Net (Contrib - Deduct)", netTotals, "total-net");
     addTotalsRow(tbody, "Cumulative", cumulative, "total-cum");
 

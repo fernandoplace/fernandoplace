@@ -152,18 +152,19 @@ input {
 }
 
 table {
-    width: 100%;
+    width: max-content;
     border-collapse: collapse;
-    min-width: 900px;
 }
 
 th {
     background: #334155;
     padding: 14px;
+    white-space: nowrap;
 }
 
 td {
     padding: 12px;
+    white-space: nowrap;
 }
 
 th,
@@ -173,55 +174,79 @@ td {
 }
 
 /* --------------------------------------------------
-   FROZEN FIRST TWO COLUMNS (MOBILE FRIENDLY)
+   STICKY MONTH HEADER (TOP ROW)
 -------------------------------------------------- */
-
-/* Freeze column 1 */
-table th:first-child,
-table td:first-child {
+table thead th {
     position: sticky;
-    left: 0;
-    z-index: 3;
-    background: #1e293b;
-}
-
-/* Freeze column 2 */
-table th:nth-child(2),
-table td:nth-child(2) {
-    position: sticky;
-    left: 120px; /* Adjust if needed */
-    z-index: 3;
-    background: #0f766e;
+    top: 0;
+    z-index: 7;
+    background: #334155;
 }
 
 /* --------------------------------------------------
-   CONTRIBUTIONS TABLE COLORS
+   CONTRIBUTIONS — Freeze FIRST TWO columns
 -------------------------------------------------- */
-.contributions-table th:nth-child(1),
-.contributions-table td:nth-child(1) {
-    background-color: #1e293b;
+
+/* Column widths */
+.contributions-table th:first-child,
+.contributions-table td:first-child {
+    min-width: 110px;
+    max-width: 110px;
 }
 
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
-    background-color: #0f766e;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+/* Freeze column 1 */
+.contributions-table th:first-child,
+.contributions-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    background: #1e293b;
+}
+
+/* Freeze column 2 */
+.contributions-table th:nth-child(2),
+.contributions-table td:nth-child(2) {
+    position: sticky;
+    left: 110px;
+    z-index: 8;
+    background: #0f766e;
 }
 
 /* --------------------------------------------------
-   DEDUCTIONS TABLE COLORS
+   DEDUCTIONS — Freeze ONLY FIRST column
 -------------------------------------------------- */
-.deductions-table th:nth-child(1),
-.deductions-table td:nth-child(1) {
-    background-color: #1e293b;
+
+.deductions-table th:first-child,
+.deductions-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    background: #1e293b;
+    min-width: 200px;
+}
+
+/* --------------------------------------------------
+   GRAND TOTALS — Freeze ONLY FIRST column
+-------------------------------------------------- */
+
+.totals-table th:first-child,
+.totals-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    background: #1e293b;
+    min-width: 200px;
 }
 
 /* --------------------------------------------------
    TOTALS TABLE COLORS
 -------------------------------------------------- */
-.totals-table th {
-    background: #334155;
-}
-
 .total-contrib td {
     background: rgba(59,130,246,0.25);
 }

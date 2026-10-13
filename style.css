@@ -1,3 +1,6 @@
+/* --------------------------------------------------
+   GLOBAL RESET & BASE
+-------------------------------------------------- */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", sans-serif;
@@ -24,7 +27,9 @@ h1 {
     font-weight: 700;
 }
 
-/* Tabs */
+/* --------------------------------------------------
+   TABS
+-------------------------------------------------- */
 .tabs {
     display: flex;
     gap: 12px;
@@ -60,7 +65,9 @@ h1 {
     display: block;
 }
 
-/* Glass card */
+/* --------------------------------------------------
+   GLASS CARD
+-------------------------------------------------- */
 .glass-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
@@ -75,7 +82,9 @@ h1 {
     margin-top: 12px;
 }
 
-/* Fade-in image */
+/* --------------------------------------------------
+   HOME IMAGE FADE-IN
+-------------------------------------------------- */
 .home-image {
     width: 100%;
     max-width: 900px;
@@ -97,7 +106,9 @@ h1 {
     }
 }
 
-/* Controls */
+/* --------------------------------------------------
+   CONTROLS
+-------------------------------------------------- */
 .controls {
     display: flex;
     gap: 15px;
@@ -130,10 +141,13 @@ input {
     color: #cbd5f5;
 }
 
-/* Tables */
+/* --------------------------------------------------
+   TABLE BASE
+-------------------------------------------------- */
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 18px;
 }
 
@@ -152,23 +166,37 @@ td {
     padding: 12px;
 }
 
-th, td {
+th,
+td {
     text-align: center;
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* Sticky first column */
+/* --------------------------------------------------
+   FROZEN FIRST TWO COLUMNS (MOBILE FRIENDLY)
+-------------------------------------------------- */
+
+/* Freeze column 1 */
 table th:first-child,
 table td:first-child {
-    text-align: left;
-    background: #243447;
-    font-weight: 600;
     position: sticky;
     left: 0;
-    z-index: 1;
+    z-index: 3;
+    background: #1e293b;
 }
 
-/* Contributions colors */
+/* Freeze column 2 */
+table th:nth-child(2),
+table td:nth-child(2) {
+    position: sticky;
+    left: 120px; /* Adjust if needed */
+    z-index: 3;
+    background: #0f766e;
+}
+
+/* --------------------------------------------------
+   CONTRIBUTIONS TABLE COLORS
+-------------------------------------------------- */
 .contributions-table th:nth-child(1),
 .contributions-table td:nth-child(1) {
     background-color: #1e293b;
@@ -179,13 +207,17 @@ table td:first-child {
     background-color: #0f766e;
 }
 
-/* Deductions colors */
+/* --------------------------------------------------
+   DEDUCTIONS TABLE COLORS
+-------------------------------------------------- */
 .deductions-table th:nth-child(1),
 .deductions-table td:nth-child(1) {
     background-color: #1e293b;
 }
 
-/* Totals colors */
+/* --------------------------------------------------
+   TOTALS TABLE COLORS
+-------------------------------------------------- */
 .totals-table th {
     background: #334155;
 }
@@ -204,5 +236,46 @@ table td:first-child {
 
 .total-cum td {
     background: rgba(15,118,110,0.25);
+}
+
+/* --------------------------------------------------
+   MOBILE RESPONSIVE
+-------------------------------------------------- */
+@media (max-width: 768px) {
+
+    body {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .glass-card {
+        padding: 16px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    select,
+    input {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+    }
+
+    table {
+        min-width: 100%;
+    }
 }
 

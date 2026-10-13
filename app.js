@@ -1,21 +1,28 @@
-const SHEET_ID = "1eOEnOQbtexTGvAChflSpap6R_zzDQwa1ccfp4bhNfwU";
+iconst SHEET_ID = "1eOEnOQbtexTGvAChflSpap6R_zzDQwa1ccfp4bhNfwU";
 
 let currentYearData = null;
 let previousYearCumulative = 0;
 
 const monthColours = ["#2948b8", "#0b6b52"];
 
+/* ---------------- TAB SWITCHING ---------------- */
+
+function showTab(tabId) {
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+
+    document.getElementById(tabId).classList.add("active");
+    document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add("active");
+}
+
+/* ---------------- INITIAL LOAD ---------------- */
+
 document.addEventListener("DOMContentLoaded", async () => {
     await buildYearDropdown();
     document.getElementById("searchBox").addEventListener("input", filterContributions);
 });
 
-function showTab(tabId) {
-    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
-    document.getElementById(tabId).classList.add("active");
-    document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add("active");
-}
+/* ---------------- YEAR DROPDOWN ---------------- */
 
 async function buildYearDropdown() {
     const years = await getYears();
@@ -35,6 +42,8 @@ async function buildYearDropdown() {
     await loadSheet(years[0]);
 }
 
+/* ---------------- FETCH YEARS ---------------- */
+
 async function getYears() {
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Years&tqx=out:json`;
     const res = await fetch(url);
@@ -43,6 +52,8 @@ async function getYears() {
     return json.table.rows.map(r => r.c[0]?.v).filter(Boolean).map(String);
 }
 
+/* ---------------- FETCH YEAR SHEET ---------------- */
+
 async function getRawSheetJson(sheetName) {
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${sheetName}&tqx=out:json`;
     const res = await fetch(url);
@@ -50,9 +61,13 @@ async function getRawSheetJson(sheetName) {
     return JSON.parse(txt.substring(47).slice(0, -2));
 }
 
+/* ---------------- PARSE MONTH LABELS ---------------- */
+
 function getMonthLabels(json, year) {
     return json.table.cols.slice(2).map(col => `${col.label} ${year}`);
 }
+
+/* ---------------- PARSE YEAR DATA ---------------- */
 
 function parseYearData(json, year) {
     const months = getMonthLabels(json, year);
@@ -113,6 +128,8 @@ function parseYearData(json, year) {
     };
 }
 
+/* ---------------- LOAD YEAR ---------------- */
+
 async function loadSheet(year) {
     document.getElementById("yearTitle").textContent = `Displaying Data for ${year}`;
 
@@ -125,6 +142,8 @@ async function loadSheet(year) {
     renderDeductionsTable(currentYearData);
     renderTotalsTable(currentYearData);
 }
+
+/* ---------------- CUMULATIVE ---------------- */
 
 function computeCumulative(year) {
     const years = ["2023", "2024", "2025", "2026"];
@@ -144,6 +163,8 @@ function computeCumulative(year) {
     previousYearCumulative = cumulative[cumulative.length - 1];
     currentYearData.cumulative = cumulative;
 }
+
+/* ---------------- RENDER CONTRIBUTIONS ---------------- */
 
 function renderContributionsTable(data) {
     const table = document.getElementById("contributionsTable");
@@ -189,6 +210,8 @@ function renderContributionsTable(data) {
     table.appendChild(tbody);
 }
 
+/* ---------------- RENDER DEDUCTIONS ---------------- */
+
 function renderDeductionsTable(data) {
     const table = document.getElementById("deductionsTable");
     table.innerHTML = "";
@@ -229,6 +252,8 @@ function renderDeductionsTable(data) {
     table.appendChild(tbody);
 }
 
+/* ---------------- RENDER TOTALS ---------------- */
+
 function renderTotalsTable(data) {
     const table = document.getElementById("totalsTable");
     table.innerHTML = "";
@@ -257,6 +282,8 @@ function renderTotalsTable(data) {
     table.appendChild(tbody);
 }
 
+/* ---------------- ADD TOTAL ROW ---------------- */
+
 function addTotalsRow(tbody, metric, values, className) {
     const tr = document.createElement("tr");
     tr.classList.add(className);
@@ -266,4 +293,31 @@ function addTotalsRow(tbody, metric, values, className) {
     tr.appendChild(tdMetric);
 
     values.forEach(v => {
+        const td = document.createElement("td");
+        td.textContent = v || "";
+        tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+}
+
+/* ---------------- SEARCH ---------------- */
+
+function filterContributions() {
+    const search = document.getElementById("searchBox").value.toLowerCase();
+
+    const filtered = currentYearData.contributions.filter(r =>
+        r.house.toLowerCase().includes(search) ||
+        r.name.toLowerCase().includes(search)
+    );
+
+    const filteredData = {
+        ...currentYearData,
+        contributions: filtered
+    };
+
+    renderContributionsTable(filteredData);
+    renderDeductionsTable(currentYearData);
+    renderTotalsTable(currentYearData);
+}
 

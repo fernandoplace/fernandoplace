@@ -1,7 +1,8 @@
 const SHEET_ID = "1eOEnOQbtexTGvAChflSpap6R_zzDQwa1ccfp4bhNfwU";
 
 let currentYearData = null;
-let previousYearCumulative = 0;
+let yearsList = [];
+let cumulativeStartByYear = {};
 
 const monthColours = ["#2948b8", "#0b6b52"];
 
@@ -11,8 +12,23 @@ function showTab(tabId) {
     document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
 
-    document.getElementById(tabId).classList.add("active");
-    document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add("active");
+    const tabEl = document.getElementById(tabId);
+    if (tabEl) tabEl.classList.add("active");
+
+    const btn = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+    if (btn) btn.classList.add("active");
+}
+
+/* Optional: for Accounts tab to always use latest year */
+function openAccountsTab() {
+    if (!yearsList.length) return;
+    const latestYear = yearsList[yearsList.length - 1];
+    const dropdown = document.getElementById("yearSelect");
+    if (dropdown) {
+        dropdown.value = latestYear;
+    }
+    loadSheet(latestYear);
+    showTab("accounts");
 }
 
 /* ---------------- INITIAL LOAD ---------------- */
@@ -26,6 +42,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function buildYearDropdown() {
     const years = await getYears();
+    yearsList = years;
+
     const dropdown = document.getElementById("yearSelect");
     dropdown.innerHTML = "";
 
@@ -35,6 +53,9 @@ async function buildYearDropdown() {
         opt.textContent = year;
         dropdown.appendChild(opt);
     });
+
+    // Precompute cumulative starting values for all years
+    await precomputeCumulativeStarts(years);
 
     dropdown.value = years[0];
     dropdown.addEventListener("change", () => loadSheet(dropdown.value));
@@ -135,6 +156,44 @@ function parseYearData(json, year) {
     };
 }
 
+/* ---------------- PRECOMPUTE CUMULATIVE STARTS ---------------- */
+
+async function precomputeCumulativeStarts(years) {
+    let runningCumulative = 0;
+
+    for (let i = 0; i < years.length; i++) {
+        const year = years[i];
+        const json = await getRawSheetJson(year);
+        const data = parseYearData(json, year);
+
+        if (i === 0) {
+            // First year (2023): start from sheet's Sep 2023 cumulative (8500)
+            const potRow = data.rawRows.find(r =>
+                String(r.label).trim().toLowerCase() === "current total in welfare pot"
+            );
+            const startFromSheet = potRow ? potRow.values[0] : 0; // Sep 2023
+            runningCumulative = startFromSheet;
+
+            // Store starting cumulative for this year (first month in this sheet)
+            cumulativeStartByYear[year] = runningCumulative;
+
+            // Then walk through remaining months of 2023
+            for (let m = 1; m < data.netTotals.length; m++) {
+                runningCumulative += data.netTotals[m];
+            }
+        } else {
+            // Subsequent years: starting cumulative for this year = runningCumulative + first month net
+            runningCumulative += data.netTotals[0];
+            cumulativeStartByYear[year] = runningCumulative;
+
+            // Then walk through remaining months of this year
+            for (let m = 1; m < data.netTotals.length; m++) {
+                runningCumulative += data.netTotals[m];
+            }
+        }
+    }
+}
+
 /* ---------------- LOAD YEAR ---------------- */
 
 async function loadSheet(year) {
@@ -150,36 +209,20 @@ async function loadSheet(year) {
     renderTotalsTable(currentYearData);
 }
 
-/* ---------------- CUMULATIVE (FINAL, CROSS-CHECKED) ---------------- */
+/* ---------------- CUMULATIVE (USES PRECOMPUTED START) ---------------- */
 
 function computeCumulative(year) {
-    const years = ["2023", "2024", "2025", "2026"];
-    const yearIndex = years.indexOf(year);
-
+    const start = cumulativeStartByYear[year] || 0;
     const cumulative = [];
 
-    if (yearIndex === 0) {
-        // First year: use sheet value for Sep 2023 as starting cumulative (8500)
-        const potRow = currentYearData.rawRows.find(r =>
-            String(r.label).trim().toLowerCase() === "current total in welfare pot"
-        );
+    // First month cumulative for this year
+    cumulative[0] = start;
 
-        const startFromSheet = potRow ? potRow.values[0] : 0; // Sep 2023
-        cumulative[0] = startFromSheet;
-
-        for (let i = 1; i < currentYearData.netTotals.length; i++) {
-            cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
-        }
-    } else {
-        // Subsequent years: Jan cumulative = Dec previous year cumulative + Jan net
-        cumulative[0] = previousYearCumulative + currentYearData.netTotals[0];
-
-        for (let i = 1; i < currentYearData.netTotals.length; i++) {
-            cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
-        }
+    // Remaining months: add net within this year
+    for (let i = 1; i < currentYearData.netTotals.length; i++) {
+        cumulative[i] = cumulative[i - 1] + currentYearData.netTotals[i];
     }
 
-    previousYearCumulative = cumulative[cumulative.length - 1];
     currentYearData.cumulative = cumulative;
 }
 

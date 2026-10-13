@@ -157,7 +157,7 @@ table thead th {
     background: #334155;
 }
 
-/* CONTRIBUTIONS — NAME COLUMN (sticky + wraps) */
+/* CONTRIBUTIONS — NAME COLUMN (sticky + wraps at 160px) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
     min-width: 160px;
@@ -174,7 +174,7 @@ table thead th {
     line-height: 1.25;
 }
 
-/* HOUSE NUMBER COLUMN — wider + no wrap + mobile-safe */
+/* HOUSE NUMBER COLUMN — 135px, no wrap, mobile-safe */
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
     min-width: 135px;

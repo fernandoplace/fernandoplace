@@ -1,6 +1,4 @@
-/* --------------------------------------------------
-   GLOBAL RESET & BASE
--------------------------------------------------- */
+/* GLOBAL */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", sans-serif;
@@ -27,9 +25,7 @@ h1 {
     font-weight: 700;
 }
 
-/* --------------------------------------------------
-   TABS
--------------------------------------------------- */
+/* TABS */
 .tabs {
     display: flex;
     gap: 12px;
@@ -48,15 +44,11 @@ h1 {
     transition: .25s;
 }
 
-.tab-button:hover {
-    background: rgba(255,255,255,0.15);
-}
-
 .tab-button.active {
     background: rgba(59,130,246,0.35);
-    border-color: rgba(96,165,250,0.6);
 }
 
+/* TAB CONTENT */
 .tab-content {
     display: none;
 }
@@ -65,26 +57,16 @@ h1 {
     display: block;
 }
 
-/* --------------------------------------------------
-   GLASS CARD
--------------------------------------------------- */
+/* GLASS CARD */
 .glass-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 18px;
     padding: 25px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
-.glass-card p {
-    line-height: 1.8;
-    margin-top: 12px;
-}
-
-/* --------------------------------------------------
-   HOME IMAGE FADE-IN (RESTORED)
--------------------------------------------------- */
+/* HOME IMAGE FADE-IN */
 .home-image {
     width: 100%;
     max-width: 900px;
@@ -96,19 +78,11 @@ h1 {
 }
 
 @keyframes fadeInImage {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* --------------------------------------------------
-   CONTROLS (RESTORED DROPDOWN STYLE)
--------------------------------------------------- */
+/* CONTROLS */
 .controls {
     display: flex;
     gap: 15px;
@@ -119,10 +93,14 @@ select {
     background: rgba(11,107,82,0.75);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    color: white !important;
     border-radius: 10px;
     padding: 12px;
     min-width: 140px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 input {
@@ -141,9 +119,7 @@ input {
     color: #cbd5f5;
 }
 
-/* --------------------------------------------------
-   TABLE BASE
--------------------------------------------------- */
+/* TABLE BASE */
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
@@ -173,9 +149,7 @@ td {
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* --------------------------------------------------
-   STICKY MONTH HEADER
--------------------------------------------------- */
+/* STICKY MONTH HEADER */
 table thead th {
     position: sticky;
     top: 0;
@@ -183,33 +157,28 @@ table thead th {
     background: #334155;
 }
 
-/* --------------------------------------------------
-   CONTRIBUTIONS — Freeze ONLY Name column
--------------------------------------------------- */
-
-/* Name column (now column 1) */
+/* CONTRIBUTIONS — Name column ONLY (column 1) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 160px;
+    max-width: 160px;
     position: sticky;
     left: 0;
     z-index: 8;
     background: #0f766e;
+    white-space: normal;       /* allow wrapping */
+    word-wrap: break-word;     /* break long names */
+    line-height: 1.25;
 }
 
-/* House Number column (now column 2) */
+/* House Number column (column 2) */
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
     min-width: 90px;
     max-width: 90px;
-    white-space: normal;
-    line-height: 1.2;
 }
 
-/* --------------------------------------------------
-   DEDUCTIONS — Freeze ONLY first column
--------------------------------------------------- */
+/* DEDUCTIONS — Freeze first column */
 .deductions-table th:first-child,
 .deductions-table td:first-child {
     position: sticky;
@@ -219,9 +188,7 @@ table thead th {
     min-width: 200px;
 }
 
-/* --------------------------------------------------
-   GRAND TOTALS — Freeze ONLY first column
--------------------------------------------------- */
+/* TOTALS — Freeze first column */
 .totals-table th:first-child,
 .totals-table td:first-child {
     position: sticky;
@@ -231,63 +198,21 @@ table thead th {
     min-width: 200px;
 }
 
-/* --------------------------------------------------
-   TOTALS COLORS
--------------------------------------------------- */
-.total-contrib td {
-    background: rgba(59,130,246,0.25);
-}
+/* TOTAL COLORS */
+.total-contrib td { background: rgba(59,130,246,0.25); }
+.total-deduct td { background: rgba(220,38,38,0.25); }
+.total-net td    { background: rgba(34,197,94,0.25); }
+.total-cum td    { background: rgba(15,118,110,0.25); }
 
-.total-deduct td {
-    background: rgba(220,38,38,0.25);
-}
-
-.total-net td {
-    background: rgba(34,197,94,0.25);
-}
-
-.total-cum td {
-    background: rgba(15,118,110,0.25);
-}
-
-/* --------------------------------------------------
-   MOBILE RESPONSIVE
--------------------------------------------------- */
+/* MOBILE */
 @media (max-width: 768px) {
-
-    body {
-        padding: 12px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    .glass-card {
-        padding: 16px;
-    }
-
-    .controls {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    select,
-    input {
-        width: 100%;
-        min-width: auto;
-    }
-
-    .tabs {
-        flex-direction: column;
-    }
-
-    .tab-button {
-        width: 100%;
-    }
-
-    table {
-        min-width: 100%;
-    }
+    body { padding: 12px; }
+    h1 { font-size: 1.8rem; }
+    .glass-card { padding: 16px; }
+    .controls { flex-direction: column; gap: 10px; }
+    select, input { width: 100%; min-width: auto; }
+    .tabs { flex-direction: column; }
+    .tab-button { width: 100%; }
+    table { min-width: 100%; }
 }
 

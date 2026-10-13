@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fernando Place Welfare Dashboard</title>
+    <title>Fernando Place Welfare Association</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 <div class="container">
 
-    <h1>Fernando Place Welfare Dashboard</h1>
+    <h1>Fernando Place Welfare Association</h1>
 
-    <!-- TABS -->
     <div class="tabs">
         <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
         <button class="tab-button" data-tab="accounts" onclick="openAccountsTab()">Accounts</button>
@@ -26,9 +25,9 @@
         <div class="glass-card">
             <h2>Welcome</h2>
             <p>
-                This webpage is designed to furnish updates and maintain full transparency 
+                This webpage is intended to furnish updates and maintain full transparency 
                 of welfare accounts, projects, contacts, notices, and community activities 
-                for Fernando Place.
+                for Fernando Place Residents.
             </p>
             <img src="lane.jpg" class="home-image" alt="Fernando Place Lane" />
         </div>
@@ -37,26 +36,23 @@
     <!-- ACCOUNTS TAB -->
     <div id="accounts" class="tab-content">
         <div class="glass-card">
-            <h2 id="yearTitle">Displaying Data</h2>
+            <h2 id="yearTitle">Displaying Accounts</h2>
 
             <div class="controls">
                 <select id="yearSelect"></select>
                 <input id="searchBox" type="text" placeholder="Search name or house number..." />
             </div>
 
-            <!-- CONTRIBUTIONS -->
             <h3 class="section-title">Contributions</h3>
             <div class="table-container">
                 <table id="contributionsTable"></table>
             </div>
 
-            <!-- DEDUCTIONS -->
             <h3 class="section-title">Deductions</h3>
             <div class="table-container">
                 <table id="deductionsTable"></table>
             </div>
 
-            <!-- TOTALS -->
             <h3 class="section-title">Grand Totals</h3>
             <div class="table-container">
                 <table id="totalsTable"></table>

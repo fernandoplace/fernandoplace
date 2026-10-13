@@ -1,0 +1,307 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background:
+        linear-gradient(
+            135deg,
+            #071633,
+            #0f172a
+        );
+
+    color: white;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1800px;
+    margin: auto;
+}
+
+h1 {
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+
+    padding: 12px 22px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid rgba(
+            255,255,255,0.1
+        );
+
+    backdrop-filter: blur(14px);
+
+    color: white;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.tab-button:hover {
+
+    background:
+        rgba(255,255,255,0.15);
+
+}
+
+.tab-button.active {
+
+    background:
+        rgba(59,130,246,0.35);
+
+    border-color:
+        rgba(96,165,250,0.6);
+
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.glass-card {
+
+    background:
+        rgba(255,255,255,0.05);
+
+    backdrop-filter: blur(12px);
+
+    border:
+        1px solid rgba(
+            255,255,255,0.1
+        );
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 8px 32px rgba(
+            0,0,0,0.25
+        );
+}
+
+.glass-card p {
+    line-height: 1.8;
+    margin-top: 12px;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+select {
+
+    background:
+        rgba(11,107,82,0.75);
+
+    backdrop-filter: blur(12px);
+
+    border:
+        1px solid rgba(
+            255,255,255,0.15
+        );
+
+    color: white;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    min-width: 120px;
+}
+
+select:hover {
+    background: #0f766e;
+}
+
+select:focus {
+
+    outline: none;
+
+    background: #0f766e;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(
+            34,197,94,0.4
+        );
+}
+
+option {
+    background: #1e40af; /* dark blue */
+    color: white;
+}
+
+input {
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    min-width: 250px;
+}
+
+#yearTitle {
+
+    margin-bottom: 20px;
+
+    color: #e2e8f0;
+
+    font-size: 1.4rem;
+}
+
+.table-container {
+
+    overflow-x: auto;
+
+    border-radius: 12px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+}
+
+th {
+
+    background: #334155;
+
+    padding: 14px;
+}
+
+td {
+    padding: 12px;
+}
+
+th,
+td {
+
+    text-align: center;
+
+    border:
+        1px solid rgba(
+            255,255,255,0.08
+        );
+}
+
+th:first-child,
+td:first-child {
+
+    text-align: left;
+
+    background: #243447;
+
+    font-weight: 600;
+
+    position: sticky;
+
+    left: 0;
+
+    z-index: 1;
+}
+
+.total-row td {
+
+    background:
+        #475569 !important;
+
+    font-weight: 700;
+}
+
+.cumulative-row td {
+
+    background:
+        #0f766e !important;
+
+    font-weight: 700;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .glass-card {
+        padding: 16px;
+    }
+
+    .controls {
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    select,
+    input {
+
+        width: 100%;
+
+        min-width: auto;
+    }
+
+    .tabs {
+
+        flex-direction: column;
+    }
+
+    .tab-button {
+
+        width: 100%;
+    }
+
+    #yearTitle {
+
+        font-size: 1.15rem;
+    }
+}
+

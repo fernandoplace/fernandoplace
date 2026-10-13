@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPC Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>HPC Operations Portal</h1>
+
+        <div class="tabs">
+
+            <button class="tab-button active"
+                onclick="showTab('intro')">
+                Introduction
+            </button>
+
+            <button class="tab-button"
+                onclick="showTab('dashboard')">
+                Dashboard
+            </button>
+
+            <button class="tab-button"
+                onclick="showTab('contact')">
+                Contact
+            </button>
+
+        </div>
+
+        <div id="intro" class="tab-content active">
+
+            <div class="glass-card">
+
+                <h2>About HPC</h2>
+
+                <p>
+                    High Performance Computing (HPC) combines
+                    multiple compute resources to solve complex
+                    scientific, engineering and business problems.
+                    HPC environments provide large-scale parallel
+                    processing capabilities, enabling workloads
+                    that would otherwise take days, weeks or months
+                    to complete on traditional systems.
+                </p>
+
+                <p>
+                    This dashboard provides a simple view of HPC
+                    workload trends, yearly statistics and runtime
+                    metrics stored within Google Sheets.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div id="dashboard" class="tab-content">
+
+            <div class="glass-card">
+
+                <div class="controls">
+
+                    <select id="yearSelect"></select>
+
+                    <input
+                        type="text"
+                        id="searchBox"
+                        placeholder="Search Job Name">
+
+                </div>
+
+                <h2 id="yearTitle"></h2>
+
+                <div class="table-container">
+                    <table id="jobTable"></table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="contact" class="tab-content">
+
+            <div class="glass-card">
+
+                <h2>Contact</h2>
+
+                <p>
+                    Arun Prabhakar
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

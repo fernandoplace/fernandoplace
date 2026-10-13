@@ -1,3 +1,6 @@
+/* --------------------------------------------------
+   GLOBAL RESET & BASE
+-------------------------------------------------- */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", sans-serif;
@@ -24,6 +27,9 @@ h1 {
     font-weight: 700;
 }
 
+/* --------------------------------------------------
+   TABS
+-------------------------------------------------- */
 .tabs {
     display: flex;
     gap: 12px;
@@ -59,6 +65,9 @@ h1 {
     display: block;
 }
 
+/* --------------------------------------------------
+   GLASS CARD
+-------------------------------------------------- */
 .glass-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
@@ -73,6 +82,9 @@ h1 {
     margin-top: 12px;
 }
 
+/* --------------------------------------------------
+   CONTROLS
+-------------------------------------------------- */
 .controls {
     display: flex;
     gap: 15px;
@@ -126,6 +138,9 @@ input {
     color: #cbd5f5;
 }
 
+/* --------------------------------------------------
+   TABLE BASE
+-------------------------------------------------- */
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
@@ -154,7 +169,7 @@ td {
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* Sticky first column for all tables */
+/* Sticky first column */
 .contributions-table th:first-child,
 .contributions-table td:first-child,
 .deductions-table th:first-child,
@@ -169,46 +184,53 @@ td {
     z-index: 1;
 }
 
-/* Contributions: House Number + Name colors */
+/* --------------------------------------------------
+   CONTRIBUTIONS TABLE COLORS
+-------------------------------------------------- */
 .contributions-table th:nth-child(1),
 .contributions-table td:nth-child(1) {
-    background-color: #1e293b;
+    background-color: #1e293b; /* House Number */
 }
 
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
-    background-color: #0f766e;
+    background-color: #0f766e; /* Name */
 }
 
-/* Deductions: Description column color */
+/* --------------------------------------------------
+   DEDUCTIONS TABLE COLORS
+-------------------------------------------------- */
 .deductions-table th:nth-child(1),
 .deductions-table td:nth-child(1) {
-    background-color: #1e293b;
+    background-color: #1e293b; /* Description */
 }
 
-/* Totals table styling */
+/* --------------------------------------------------
+   TOTALS TABLE COLORS
+-------------------------------------------------- */
 .totals-table th {
     background: #334155;
 }
 
-.totals-table .total-contrib td {
-    background: rgba(59,130,246,0.25);
+.total-contrib td {
+    background: rgba(59,130,246,0.25); /* Soft blue */
 }
 
-.totals-table .total-deduct td {
-    background: rgba(220,38,38,0.25);
+.total-deduct td {
+    background: rgba(220,38,38,0.25); /* Soft red */
 }
 
-.totals-table .total-net td {
-    background: rgba(34,197,94,0.25);
+.total-net td {
+    background: rgba(34,197,94,0.25); /* Soft green */
 }
 
-.totals-table .total-cum td {
-    background: rgba(15,118,110,0.25);
+.total-cum td {
+    background: rgba(15,118,110,0.25); /* Soft teal */
 }
 
-/* ---------- Mobile ---------- */
-
+/* --------------------------------------------------
+   MOBILE RESPONSIVE
+-------------------------------------------------- */
 @media (max-width: 768px) {
 
     body {

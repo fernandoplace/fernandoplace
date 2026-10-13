@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HPC Operations Portal</title>
+    <title>Fernando Place Welfare Association</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,45 +12,37 @@
 
     <div class="container">
 
-        <h1>HPC Operations Portal</h1>
+        <h1>Fernando Place Welfare Association</h1>
 
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('intro')">
-                Introduction
-            </button>
-            <button class="tab-button" onclick="showTab('dashboard')">
-                Dashboard
-            </button>
-            <button class="tab-button" onclick="showTab('contact')">
-                Contact
-            </button>
+            <button class="tab-button active" onclick="showTab('home')">Home</button>
+            <button class="tab-button" onclick="showTab('account')">Accounts</button>
+            <button class="tab-button" onclick="showTab('gate')">Gate Renovation Project</button>
+            <button class="tab-button" onclick="showTab('committee')">Committee & Contacts</button>
         </div>
 
-        <div id="intro" class="tab-content active">
+        <!-- HOME TAB -->
+        <div id="home" class="tab-content active">
             <div class="glass-card">
-                <h2>About HPC</h2>
+                <h2>Welcome</h2>
                 <p>
-                    High Performance Computing (HPC) combines multiple compute resources to solve complex
-                    scientific, engineering and business problems. HPC environments provide large-scale
-                    parallel processing capabilities, enabling workloads that would otherwise take days,
-                    weeks or months to complete on traditional systems.
+                    This webpage is dedicated to the residents of <strong>Fernando Place Welfare Association, Colombo‑14</strong>.
+                    Here we share welfare updates, monthly statements, project progress, and community information.
                 </p>
                 <p>
-                    This dashboard provides a simple view of welfare workload trends, yearly statistics
-                    and runtime metrics stored within Google Sheets.
+                    Our goal is to maintain transparency, strengthen unity, and ensure every resident stays informed
+                    about the welfare activities that support our neighbourhood.
                 </p>
             </div>
         </div>
 
-        <div id="dashboard" class="tab-content">
+        <!-- ACCOUNT TAB -->
+        <div id="account" class="tab-content">
             <div class="glass-card">
 
                 <div class="controls">
                     <select id="yearSelect"></select>
-                    <input
-                        type="text"
-                        id="searchBox"
-                        placeholder="Search House or Name">
+                    <input type="text" id="searchBox" placeholder="Search House or Name">
                 </div>
 
                 <h2 id="yearTitle"></h2>
@@ -73,18 +65,25 @@
             </div>
         </div>
 
-        <div id="contact" class="tab-content">
+        <!-- GATE RENOVATION TAB -->
+        <div id="gate" class="tab-content">
             <div class="glass-card">
-                <h2>Contact</h2>
-                <p>
-                    Arun Prabhakar
-                </p>
+                <h2>Gate Renovation Project</h2>
+                <p>Coming soon.</p>
+            </div>
+        </div>
+
+        <!-- COMMITTEE TAB -->
+        <div id="committee" class="tab-content">
+            <div class="glass-card">
+                <h2>Committee & Contacts</h2>
+                <p>Details will be added soon.</p>
             </div>
         </div>
 
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=3"></script>
 
 </body>
 

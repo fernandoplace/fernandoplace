@@ -6,13 +6,7 @@
 }
 
 body {
-    background:
-        linear-gradient(
-            135deg,
-            #071633,
-            #0f172a
-        );
-
+    background: linear-gradient(135deg, #071633, #0f172a);
     color: white;
     min-height: 100vh;
     padding: 30px;
@@ -38,43 +32,23 @@ h1 {
 }
 
 .tab-button {
-
     padding: 12px 22px;
-
-    background:
-        rgba(255,255,255,0.08);
-
-    border:
-        1px solid rgba(
-            255,255,255,0.1
-        );
-
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
     backdrop-filter: blur(14px);
-
     color: white;
-
     border-radius: 14px;
-
     cursor: pointer;
-
     transition: .25s;
 }
 
 .tab-button:hover {
-
-    background:
-        rgba(255,255,255,0.15);
-
+    background: rgba(255,255,255,0.15);
 }
 
 .tab-button.active {
-
-    background:
-        rgba(59,130,246,0.35);
-
-    border-color:
-        rgba(96,165,250,0.6);
-
+    background: rgba(59,130,246,0.35);
+    border-color: rgba(96,165,250,0.6);
 }
 
 .tab-content {
@@ -86,25 +60,12 @@ h1 {
 }
 
 .glass-card {
-
-    background:
-        rgba(255,255,255,0.05);
-
+    background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
-
-    border:
-        1px solid rgba(
-            255,255,255,0.1
-        );
-
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 18px;
-
     padding: 25px;
-
-    box-shadow:
-        0 8px 32px rgba(
-            0,0,0,0.25
-        );
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
 .glass-card p {
@@ -119,23 +80,12 @@ h1 {
 }
 
 select {
-
-    background:
-        rgba(11,107,82,0.75);
-
+    background: rgba(11,107,82,0.75);
     backdrop-filter: blur(12px);
-
-    border:
-        1px solid rgba(
-            255,255,255,0.15
-        );
-
+    border: 1px solid rgba(255,255,255,0.15);
     color: white;
-
     border-radius: 10px;
-
     padding: 12px;
-
     min-width: 120px;
 }
 
@@ -144,70 +94,46 @@ select:hover {
 }
 
 select:focus {
-
     outline: none;
-
     background: #0f766e;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(
-            34,197,94,0.4
-        );
+    box-shadow: 0 0 0 2px rgba(34,197,94,0.4);
 }
 
 option {
-    background: #1e40af; /* dark blue */
+    background: #1e40af;
     color: white;
 }
 
 input {
-
-    background:
-        rgba(255,255,255,0.07);
-
+    background: rgba(255,255,255,0.07);
     color: white;
-
     border: none;
-
     border-radius: 10px;
-
     padding: 12px;
-
     min-width: 250px;
 }
 
 #yearTitle {
-
     margin-bottom: 20px;
-
     color: #e2e8f0;
-
     font-size: 1.4rem;
 }
 
 .table-container {
-
     overflow-x: auto;
-
     border-radius: 12px;
-
     -webkit-overflow-scrolling: touch;
+    margin-bottom: 30px;
 }
 
 table {
-
     width: 100%;
-
     border-collapse: collapse;
-
     min-width: 900px;
 }
 
 th {
-
     background: #334155;
-
     padding: 14px;
 }
 
@@ -215,53 +141,32 @@ td {
     padding: 12px;
 }
 
-th,
-td {
-
+th, td {
     text-align: center;
-
-    border:
-        1px solid rgba(
-            255,255,255,0.08
-        );
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
 th:first-child,
 td:first-child {
-
     text-align: left;
-
     background: #243447;
-
     font-weight: 600;
-
     position: sticky;
-
     left: 0;
-
     z-index: 1;
 }
 
 .total-row td {
-
-    background:
-        #475569 !important;
-
+    background: #475569 !important;
     font-weight: 700;
 }
 
 .cumulative-row td {
-
-    background:
-        #0f766e !important;
-
+    background: #0f766e !important;
     font-weight: 700;
 }
 
-/* ---------- Mobile ---------- */
-
 @media (max-width: 768px) {
-
     body {
         padding: 12px;
     }
@@ -275,32 +180,25 @@ td:first-child {
     }
 
     .controls {
-
         flex-direction: column;
-
         gap: 10px;
     }
 
     select,
     input {
-
         width: 100%;
-
         min-width: auto;
     }
 
     .tabs {
-
         flex-direction: column;
     }
 
     .tab-button {
-
         width: 100%;
     }
 
     #yearTitle {
-
         font-size: 1.15rem;
     }
 }

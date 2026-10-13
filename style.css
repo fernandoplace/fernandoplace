@@ -157,7 +157,7 @@ table thead th {
     background: #334155;
 }
 
-/* CONTRIBUTIONS — NAME COLUMN (sticky + wraps at 160px) */
+/* CONTRIBUTIONS — NAME COLUMN (sticky + wraps) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
     min-width: 160px;
@@ -170,20 +170,14 @@ table thead th {
     white-space: normal !important;
     overflow-wrap: break-word;
     word-break: break-word;
-    display: block;
-    line-height: 1.25;
 }
 
-/* HOUSE NUMBER COLUMN — 135px, no wrap, mobile-safe */
+/* HOUSE NUMBER COLUMN — 135px, no wrap, separate column */
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
     min-width: 135px;
     max-width: 135px;
     white-space: nowrap;
-
-    display: block;
-    box-sizing: border-box;
-    overflow: visible;
 }
 
 /* DEDUCTIONS — Freeze first column */

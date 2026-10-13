@@ -1,6 +1,3 @@
-/* --------------------------------------------------
-   GLOBAL RESET & BASE
--------------------------------------------------- */
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", sans-serif;
@@ -27,9 +24,7 @@ h1 {
     font-weight: 700;
 }
 
-/* --------------------------------------------------
-   TABS
--------------------------------------------------- */
+/* Tabs */
 .tabs {
     display: flex;
     gap: 12px;
@@ -65,9 +60,7 @@ h1 {
     display: block;
 }
 
-/* --------------------------------------------------
-   GLASS CARD
--------------------------------------------------- */
+/* Glass card */
 .glass-card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
@@ -82,9 +75,16 @@ h1 {
     margin-top: 12px;
 }
 
-/* --------------------------------------------------
-   CONTROLS
--------------------------------------------------- */
+/* Home image */
+.home-image {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Controls */
 .controls {
     display: flex;
     gap: 15px;
@@ -111,11 +111,6 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(34,197,94,0.4);
 }
 
-option {
-    background: #1e40af;
-    color: white;
-}
-
 input {
     background: rgba(255,255,255,0.07);
     color: white;
@@ -138,13 +133,10 @@ input {
     color: #cbd5f5;
 }
 
-/* --------------------------------------------------
-   TABLE BASE
--------------------------------------------------- */
+/* Tables */
 .table-container {
     overflow-x: auto;
     border-radius: 12px;
-    -webkit-overflow-scrolling: touch;
     margin-bottom: 18px;
 }
 
@@ -163,19 +155,14 @@ td {
     padding: 12px;
 }
 
-th,
-td {
+th, td {
     text-align: center;
     border: 1px solid rgba(255,255,255,0.08);
 }
 
 /* Sticky first column */
-.contributions-table th:first-child,
-.contributions-table td:first-child,
-.deductions-table th:first-child,
-.deductions-table td:first-child,
-.totals-table th:first-child,
-.totals-table td:first-child {
+table th:first-child,
+table td:first-child {
     text-align: left;
     background: #243447;
     font-weight: 600;
@@ -184,55 +171,46 @@ td {
     z-index: 1;
 }
 
-/* --------------------------------------------------
-   CONTRIBUTIONS TABLE COLORS
--------------------------------------------------- */
+/* Contributions colors */
 .contributions-table th:nth-child(1),
 .contributions-table td:nth-child(1) {
-    background-color: #1e293b; /* House Number */
+    background-color: #1e293b;
 }
 
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
-    background-color: #0f766e; /* Name */
+    background-color: #0f766e;
 }
 
-/* --------------------------------------------------
-   DEDUCTIONS TABLE COLORS
--------------------------------------------------- */
+/* Deductions colors */
 .deductions-table th:nth-child(1),
 .deductions-table td:nth-child(1) {
-    background-color: #1e293b; /* Description */
+    background-color: #1e293b;
 }
 
-/* --------------------------------------------------
-   TOTALS TABLE COLORS
--------------------------------------------------- */
+/* Totals colors */
 .totals-table th {
     background: #334155;
 }
 
 .total-contrib td {
-    background: rgba(59,130,246,0.25); /* Soft blue */
+    background: rgba(59,130,246,0.25);
 }
 
 .total-deduct td {
-    background: rgba(220,38,38,0.25); /* Soft red */
+    background: rgba(220,38,38,0.25);
 }
 
 .total-net td {
-    background: rgba(34,197,94,0.25); /* Soft green */
+    background: rgba(34,197,94,0.25);
 }
 
 .total-cum td {
-    background: rgba(15,118,110,0.25); /* Soft teal */
+    background: rgba(15,118,110,0.25);
 }
 
-/* --------------------------------------------------
-   MOBILE RESPONSIVE
--------------------------------------------------- */
+/* Mobile */
 @media (max-width: 768px) {
-
     body {
         padding: 12px;
     }
@@ -250,10 +228,8 @@ td {
         gap: 10px;
     }
 
-    select,
-    input {
+    select, input {
         width: 100%;
-        min-width: auto;
     }
 
     .tabs {
@@ -262,10 +238,6 @@ td {
 
     .tab-button {
         width: 100%;
-    }
-
-    #yearTitle {
-        font-size: 1.15rem;
     }
 
     table {

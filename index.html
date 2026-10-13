@@ -15,19 +15,16 @@
         <h1>Fernando Place Welfare Association</h1>
 
         <div class="tabs">
-            <button class="tab-button active" onclick="showTab('home')">Home</button>
-            <button class="tab-button" onclick="showTab('account')">The Account</button>
-            <button class="tab-button" onclick="showTab('gate')">Gate Renovation Project</button>
-            <button class="tab-button" onclick="showTab('committee')">Committee & Contacts</button>
+            <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
+            <button class="tab-button" data-tab="accounts" onclick="showTab('accounts')">Accounts</button>
+            <button class="tab-button" data-tab="gate" onclick="showTab('gate')">Gate Renovation Project</button>
+            <button class="tab-button" data-tab="committee" onclick="showTab('committee')">Committee & Contacts</button>
         </div>
 
         <!-- HOME TAB -->
         <div id="home" class="tab-content active">
             <div class="glass-card">
                 <h2>Welcome</h2>
-
-                <!-- ADD YOUR IMAGE HERE -->
-                <img src="lane.jpg" alt="Fernando Place Lane" class="home-image">
 
                 <p>
                     Welcome to the official webpage of the <strong>Fernando Place Welfare Association, Colombo‑14</strong>.
@@ -39,11 +36,14 @@
                     Our goal is to maintain transparency, unity, and trust within our neighbourhood — ensuring
                     every resident stays connected and informed.
                 </p>
+
+                <!-- IMAGE AFTER DESCRIPTION -->
+                <img src="lane.jpg" alt="Fernando Place Lane" class="home-image">
             </div>
         </div>
 
-        <!-- ACCOUNT TAB -->
-        <div id="account" class="tab-content">
+        <!-- ACCOUNTS TAB -->
+        <div id="accounts" class="tab-content">
             <div class="glass-card">
 
                 <div class="controls">
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <!-- GATE RENOVATION TAB -->
+        <!-- GATE TAB -->
         <div id="gate" class="tab-content">
             <div class="glass-card">
                 <h2>Gate Renovation Project</h2>
@@ -89,7 +89,7 @@
 
     </div>
 
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
 
 </body>
 

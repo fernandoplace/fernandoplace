@@ -14,7 +14,7 @@ function showTab(tabId) {
     document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
     document.getElementById(tabId).classList.add("active");
-    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add("active");
+    document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add("active");
 }
 
 async function buildYearDropdown() {
@@ -263,4 +263,7 @@ function addTotalsRow(tbody, metric, values, className) {
 
     const tdMetric = document.createElement("td");
     tdMetric.textContent = metric;
-    tr.appendChild(tdMetric
+    tr.appendChild(tdMetric);
+
+    values.forEach(v => {
+

@@ -178,8 +178,8 @@ table thead th {
 /* HOUSE NUMBER COLUMN — fixed width, no wrap */
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
-    min-width: 110px;
-    max-width: 110px;
+    min-width: 125px;
+    max-width: 125px;
     white-space: nowrap;
 }
 

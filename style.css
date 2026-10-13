@@ -19,12 +19,6 @@ body {
     margin: auto;
 }
 
-h1 {
-    margin-bottom: 25px;
-    font-size: 2.5rem;
-    font-weight: 700;
-}
-
 /* TABS */
 .tabs {
     display: flex;
@@ -157,7 +151,7 @@ table thead th {
     background: #334155;
 }
 
-/* CONTRIBUTIONS — Name column ONLY (column 1) */
+/* CONTRIBUTIONS — NAME COLUMN (sticky + wraps on mobile) */
 .contributions-table th:first-child,
 .contributions-table td:first-child {
     min-width: 160px;
@@ -166,16 +160,26 @@ table thead th {
     left: 0;
     z-index: 8;
     background: #0f766e;
-    white-space: normal;       /* allow wrapping */
-    word-wrap: break-word;     /* break long names */
+
+    /* WRAP FIX FOR MOBILE */
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    display: block;
     line-height: 1.25;
 }
 
-/* House Number column (column 2) */
+/* HOUSE NUMBER COLUMN — wrap neatly */
 .contributions-table th:nth-child(2),
 .contributions-table td:nth-child(2) {
-    min-width: 90px;
-    max-width: 90px;
+    min-width: 120px;
+    max-width: 120px;
+
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    display: block;
+    line-height: 1.25;
 }
 
 /* DEDUCTIONS — Freeze first column */

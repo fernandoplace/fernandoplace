@@ -492,7 +492,7 @@ table thead th {
     font-size: 1.05rem;
     line-height: 1.6;
     color: #e2e8f0;
-    max-width: 900px;
+    max-width: 700px;
 }
 
 /* OLD GATE PHOTOS — vertical column, paragraph width */
@@ -503,14 +503,14 @@ table thead th {
     padding: 20px;
     border-radius: 18px;
 
-    max-width: 900px;      /* match paragraph width */
+    max-width: 700px;      /* match paragraph width */
     margin-left: 0;        /* align left */
     margin-right: auto;    /* prevent centering */
 }
 
 .old-gate-gallery img {
     width: 100%;
-    max-width: 900px;       /* same width as text */
+    max-width: 700px;       /* same width as text */
     border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.15);
     box-shadow: 0 10px 25px rgba(0,0,0,0.35);

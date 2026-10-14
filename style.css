@@ -225,26 +225,25 @@ table thead th {
     .tab-button { width: 100%; }
     table { min-width: 100%; }
 
-    /* HOME — left align on phone */
+    /* HOME — shift everything to the left */
     .home-card {
-        text-align: left;     /* stop centering text */
-        max-width: 100%;      /* full width on phone */
-        margin: 0;            /* remove auto-centering */
+        text-align: left;      /* stop centering text */
+        max-width: 100%;       /* full width on phone */
+        margin: 0;             /* remove auto-centering */
+        padding-left: 5px;     /* slight left padding */
     }
 
     .home-card p {
-        font-size: 1rem;      /* slightly smaller text */
+        font-size: 1rem;
         line-height: 1.55;
     }
 
     .home-image {
-        max-width: 350px;     /* smaller image on phone */
-        margin-left: 0;       /* align left */
-        margin-right: auto;   /* prevent centering */
+        max-width: 350px;      /* smaller image */
+        margin-left: 0;        /* align left */
+        margin-right: auto;    /* prevent centering */
     }
 }
-
-
 
 
 

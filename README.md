@@ -1,41 +1,25 @@
-# Fernando Place Welfare Association – Webpage
+<p align="center">
+  <img src="logo_welfare_association.jpg" alt="Fernando Place Welfare Association Logo" width="220">
+</p>
 
-This repository contains the source code for the **Fernando Place Welfare Association** webpage, built to help residents of Fernando Place, Colombo‑14 stay informed about:
+# Fernando Place Welfare Association
 
-- Monthly welfare accounts  
-- Contributions and deductions  
-- Community updates  
-- Gate renovation progress  
-- Committee information  
+This repository contains the source code for the official **Fernando Place Welfare Association** webpage.
 
-The website is designed with a clean, modern interface and transparent financial reporting.
+The purpose of this project is to provide residents with clear, accessible, and transparent information regarding:
 
----
+- Welfare account updates  
+- Project progress (including Gate Renovation 2026)  
+- Community notices  
+- Committee details and contact information  
 
-## 🏡 Our Lane
-
-Below is an image of Fernando Place Lane, as shown on the Home tab of the webpage:
-
-![Fernando Place Lane](lane.jpg)
+The website is maintained to ensure openness, clarity, and easy access to all welfare‑related updates for Fernando Place residents.
 
 ---
 
-## 📂 What’s inside this repo?
+## Contact
 
-- **index.html** – Main webpage structure  
-- **style.css** – Styling and layout  
-- **app.js** – Logic for loading Google Sheets data and rendering tables  
-- **lane.jpg** – Image displayed on the Home tab  
-- Additional assets and future project files  
+For welfare‑related queries or updates, please email:
 
----
+**fernandoplaceassociation@gmail.com**
 
-## 🌐 Live Website
-
-This repo powers the Fernando Place Welfare Association webpage hosted via GitHub Pages.
-
----
-
-## 📬 Contact
-
-For updates or contributions, please reach out to the Fernando Place Welfare Association committee.

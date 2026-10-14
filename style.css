@@ -262,3 +262,93 @@ table thead th {
     box-shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
 
+
+
+
+/* GATE TITLE */
+.gate-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #e2e8f0;
+    letter-spacing: 1px;
+}
+
+/* TOTAL FUNDS BOX */
+.gate-total-box {
+    margin: 30px auto;
+    padding: 25px;
+    max-width: 450px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+.gate-total-box h3 {
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+    color: #cbd5f5;
+}
+
+.gate-total-amount {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #34d399;
+    letter-spacing: 1px;
+}
+
+/* COMPLETED WORK LIST */
+.gate-work-list {
+    margin-left: 20px;
+    margin-bottom: 25px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.gate-work-list li {
+    margin-bottom: 6px;
+    color: #e2e8f0;
+}
+
+/* CONTRIBUTIONS TABLE WRAPPER */
+.gate-table-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* STYLISH TABLE */
+.gate-styled-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    text-align: center;
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+.gate-styled-table th {
+    background: rgba(59,130,246,0.35);
+    padding: 14px;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.gate-styled-table td {
+    padding: 12px;
+    font-size: 1rem;
+    color: #e2e8f0;
+}
+
+.gate-styled-table tr:nth-child(even) {
+    background: rgba(255,255,255,0.08);
+}
+
+.gate-styled-table tr:nth-child(odd) {
+    background: rgba(255,255,255,0.04);
+}
+

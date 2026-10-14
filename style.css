@@ -395,3 +395,18 @@ table thead th {
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+
+/* HOME — shift left on desktop */
+#home .glass-card {
+    max-width: 900px;      /* narrower card */
+    margin-left: 0;        /* align left */
+    margin-right: auto;    /* prevent centering */
+    text-align: left;      /* left-align text */
+}
+
+
+#home .home-image {
+    margin-left: 0;
+    margin-right: auto;
+}

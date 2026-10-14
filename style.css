@@ -251,8 +251,8 @@ table thead th {
 /* VIDEO CONTAINER — stylish vertical Shorts embed */
 .video-container {
     margin-top: 25px;
-    width: 100%;
-    max-width: 420px; /* perfect for 9:16 */
+    width: 150%;
+    max-width: 620px; /* perfect for 9:16 */
     aspect-ratio: 9 / 16;
     border-radius: 18px;
     overflow: hidden;
@@ -266,7 +266,7 @@ table thead th {
     box-shadow: 0 10px 25px rgba(0,0,0,0.35);
 
     /* Center it */
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
 }
 
@@ -281,8 +281,10 @@ table thead th {
 .notice-image-container {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* align left */
 }
+
+
 
 .notice-image {
     width: 100%;
@@ -294,19 +296,24 @@ table thead th {
 
 
 
-
-/* GATE TITLE */
+/* GATE TITLE — left aligned + premium formatting */
 .gate-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #e2e8f0;
-    letter-spacing: 1px;
+    text-align: left;              /* shift to left */
+    font-size: 2.2rem;             /* slightly larger */
+    font-weight: 700;
+    margin-bottom: 25px;           /* spacing below */
+    color: #e2e8f0;                /* soft white */
+    letter-spacing: 0.5px;         /* subtle refinement */
+    padding-left: 2px;             /* gentle alignment */
+    margin-bottom: 35px; /* more breathing room */
 }
+
+
 
 /* TOTAL FUNDS BOX */
 .gate-total-box {
-    margin: 30px auto;
+    margin: 30px 0;
+    margin-bottom: 45px; /* extra spacing before next header */
     padding: 25px;
     max-width: 450px;
     background: rgba(255,255,255,0.10);
@@ -343,11 +350,14 @@ table thead th {
 }
 
 /* CONTRIBUTIONS TABLE WRAPPER */
+
 .gate-table-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* align table to the left */
     margin-top: 20px;
+    margin-bottom: 40px; /* extra space below the table */
 }
+
 
 /* STYLISH TABLE */
 .gate-styled-table {
@@ -427,7 +437,7 @@ table thead th {
 .committee-title {
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 25px;
 }
 
 .committee-date {
@@ -474,3 +484,138 @@ table thead th {
     font-weight: 500;
     color: #c9d8ff; /* soft blue-white */
 }
+
+
+/* OLD GATE PHOTOS SECTION */
+.old-gate-description {
+    margin: 15px 0 25px 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    max-width: 900px;
+}
+
+/* OLD GATE PHOTOS — vertical column, paragraph width */
+.old-gate-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 20px;
+    border-radius: 18px;
+
+    max-width: 900px;      /* match paragraph width */
+    margin-left: 0;        /* align left */
+    margin-right: auto;    /* prevent centering */
+}
+
+.old-gate-gallery img {
+    width: 100%;
+    max-width: 900px;       /* same width as text */
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    object-fit: cover;
+}
+
+
+/* ACCOUNTS — main section title */
+.accounts-main-title {
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 25px;
+    letter-spacing: 0.6px;
+    padding-left: 2px;
+}
+
+/* ACCOUNTS — dynamic year title */
+.accounts-year-title {
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #cbd5f5;
+    margin-top: 18px;
+    margin-bottom: 25px;   /* spacing before tables */
+    padding-left: 2px;
+}
+
+
+
+/* Individual Committee Cards — narrower + left aligned */
+.committee-card {
+    margin-bottom: 25px;
+    padding: 22px;
+    border-radius: 14px;
+
+    /* NEW: limit width */
+    max-width: 250px;          /* perfect size for role + name + house */
+    margin-left: 0;            /* align left */
+    margin-right: auto;        /* prevent centering */
+
+    /* NEW: blue glass background */
+    background: rgba(59,130,246,0.18); /* soft blue glass */
+    border: 1px solid rgba(59,130,246,0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+.committee-card .committee-role {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.committee-card .committee-name {
+    font-size: 19px;
+    font-weight: 500;
+    color: #e8f0ff;   /* slightly brighter */
+    margin-bottom: 4px;
+}
+
+.committee-card .committee-house {
+    font-size: 15px;
+    opacity: 0.85;
+}
+
+
+
+/* GLASS TUBE DOUBLE BORDER TITLE */
+.title-tube {
+    padding: 22px 30px;
+    margin-bottom: 28px;
+    border-radius: 18px;
+
+    /* Inner + outer border (double border effect) */
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow:
+        0 0 0 4px rgba(59,130,246,0.35),   /* outer glowing border */
+        0 8px 25px rgba(0,0,0,0.45);       /* depth shadow */
+
+    /* Glass tube background */
+    background: linear-gradient(
+        to right,
+        rgba(59,130,246,0.20),
+        rgba(59,130,246,0.10),
+        rgba(59,130,246,0.20)
+    );
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    /* Keep it elegant, not too wide */
+    max-width: 680px;
+    margin-left: 0;
+}
+
+/* Title text */
+.main-title {
+    margin: 0;
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: #eaf1ff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+

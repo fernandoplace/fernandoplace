@@ -51,10 +51,12 @@ async function buildYearDropdown() {
 
     await precomputeCumulativeStarts(years);
 
-    dropdown.value = years[0];
+    const latestYear = years[years.length - 1];
+    dropdown.value = latestYear;
+
     dropdown.addEventListener("change", () => loadSheet(dropdown.value));
 
-    await loadSheet(years[0]);
+    await loadSheet(latestYear);
 }
 
 /* FETCH YEARS */
@@ -180,7 +182,7 @@ async function precomputeCumulativeStarts(years) {
 
 /* LOAD YEAR */
 async function loadSheet(year) {
-    document.getElementById("yearTitle").textContent = `Displaying Accounts for ${year}`;
+    document.getElementById("yearTitle").textContent = `Displaying Accounts for ${year}. All in values in LKR.`;
 
     const json = await getRawSheetJson(year);
     currentYearData = parseYearData(json, year);
@@ -241,7 +243,7 @@ function renderContributionsTable(data) {
 
         row.values.forEach((v, idx) => {
             const td = document.createElement("td");
-            td.textContent = v || "";
+            td.textContent = v ? Math.abs(v).toLocaleString() : "";
             td.style.backgroundColor = monthColours[idx % 2];
             tr.appendChild(td);
         });
@@ -283,7 +285,7 @@ function renderDeductionsTable(data) {
 
         row.values.forEach((v, idx) => {
             const td = document.createElement("td");
-            td.textContent = Math.abs(v) || "";
+            td.textContent = v ? Math.abs(v).toLocaleString() : "";
             td.style.backgroundColor = monthColours[idx % 2];
             tr.appendChild(td);
         });
@@ -335,7 +337,8 @@ function addTotalsRow(tbody, metric, values, className) {
 
     values.forEach(v => {
         const td = document.createElement("td");
-        td.textContent = v || "";
+        td.textContent = v ? v.toLocaleString() : "";
+
         tr.appendChild(td);
     });
 

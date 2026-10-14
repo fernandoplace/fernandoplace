@@ -10,12 +10,15 @@
 <body>
 <div class="container">
 
-    <h1>Fernando Place Welfare Association</h1>
+     <div class="title-tube">
+         <h1 class="main-title">Fernando Place Welfare Association</h1>
+     </div>
+         
 
     <div class="tabs">
         <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
         <button class="tab-button" data-tab="accounts" onclick="openAccountsTab()">Accounts</button>
-        <button class="tab-button" data-tab="gate" onclick="openGateTab()">Gate Renovation Project</button>
+        <button class="tab-button" data-tab="gate" onclick="openGateTab()">Gate Renovation Project 2026</button>
         <button class="tab-button" data-tab="notices" onclick="showTab('notices')">Notices</button>
         <button class="tab-button" data-tab="committee" onclick="showTab('committee')">Committee & Contacts</button>
     </div>
@@ -39,12 +42,17 @@
     <!-- ACCOUNTS TAB -->
     <div id="accounts" class="tab-content">
         <div class="glass-card">
-            <h2 id="yearTitle">Displaying Accounts</h2>
-
+            <h2 class="accounts-main-title">Account Records</h2>
+            
             <div class="controls">
                 <select id="yearSelect"></select>
-                <input id="searchBox" type="text" placeholder="Search name or house number..." />
+                <input id="searchBox" type="text" placeholder="Search Name or House Number..." />
             </div>
+            
+            <h3 id="yearTitle" class="accounts-year-title">Displaying Accounts for YEAR</h3>
+
+
+
 
             <h3 class="section-title">Contributions</h3>
             <div class="table-container">
@@ -67,7 +75,7 @@
     <!-- GATE PROJECT TAB -->
     <div id="gate" class="tab-content">
         <div class="glass-card">
-            <h2 class="gate-title">Gate Renovation Project</h2>
+            <h2 class="gate-title">Gate Renovation Project 2026</h2>
     
             <!-- Video -->
             <div class="video-container">
@@ -104,6 +112,29 @@
             <div class="gate-table-wrapper">
                 <table id="gateContribTable" class="gate-styled-table"></table>
             </div>
+
+
+            <!-- Old Gate Photos Section -->
+            <h3 class="section-title">Old Gate Photos</h3>
+            
+            <div class="old-gate-description">
+                <p>
+                    The original Fernando Place gate stood for several decades, quietly welcoming families,
+                    visitors, and generations who grew up here. Though worn and weathered with time, it carried
+                    a beautiful history — a reminder of how our community began and how far it has come.
+                    Renovating the gate was not just a repair project; it was a way of preserving that legacy
+                    while giving our neighbourhood the safe, dignified entrance it deserves today.
+                </p>
+            </div>
+            
+            <div class="old-gate-gallery glass-card">
+                <img src="old_gate_photos/oldgate1.jpeg" alt="Old Gate Photo 1">
+                <img src="old_gate_photos/oldgate2.jpeg" alt="Old Gate Photo 2">
+                <img src="old_gate_photos/oldgate3.jpeg" alt="Old Gate Photo 3">
+                <img src="old_gate_photos/oldgate4.jpeg" alt="Old Gate Photo 4">
+            </div>
+
+
         </div>
     </div>
 
@@ -125,36 +156,38 @@
         </div>
     </div>
 
-<!-- COMMITTEE TAB -->
-<div id="committee" class="tab-content">
-    <div class="glass-card committee-box">
-        <h2 class="committee-title">Committee</h2>
-        <p class="committee-date">Appointed on <strong>12th October 2026</strong></p>
+    <!-- COMMITTEE TAB -->
+    <div id="committee" class="tab-content">
+        <div class="glass-card committee-box">
+            <h2 class="committee-title">Committee</h2>
+            <p class="committee-date">Appointed on <strong>12th October 2026</strong></p>
+    
+            <div class="committee-card glass-card">
+                <h3 class="committee-role">President</h3>
+                <p class="committee-name">Mr. Sam</p>
+                <p class="committee-house">House 31/34</p>
+            </div>
+            
+            <div class="committee-card glass-card">
+                <h3 class="committee-role">Secretary</h3>
+                <p class="committee-name">Mr. Lloyd</p>
+                <p class="committee-house">House 31/32</p>
+            </div>
+            
+            <div class="committee-card glass-card">
+                <h3 class="committee-role">Treasurer</h3>
+                <p class="committee-name">Mr. Vasanthakumar</p>
+                <p class="committee-house">House 31/12</p>
+            </div>
 
-        <div class="committee-entry">
-            <h3 class="committee-role">President</h3>
-            <p class="committee-name">Mr. Sam</p>
-            <p class="committee-house">House 31/34</p>
+
         </div>
-
-        <div class="committee-entry">
-            <h3 class="committee-role">Secretary</h3>
-            <p class="committee-name">Mr. Lloyd</p>
-            <p class="committee-house">House 31/32</p>
-        </div>
-
-        <div class="committee-entry">
-            <h3 class="committee-role">Treasurer</h3>
-            <p class="committee-name">Mr. Vasanthakumar</p>
-            <p class="committee-house">House 31/12</p>
+    
+        <div class="glass-card contact-box">
+            <h3 class="committee-contact-title">Contact</h3>
+            <p class="committee-email">fernandoplaceassociation@gmail.com</p>
         </div>
     </div>
-
-    <div class="glass-card contact-box">
-        <h3 class="committee-contact-title">Contact</h3>
-        <p class="committee-email">fernandoplaceassociation@gmail.com</p>
-    </div>
-</div>
     
 
 

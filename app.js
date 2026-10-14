@@ -361,3 +361,57 @@ function filterContributions() {
     renderTotalsTable(currentYearData);
 }
 
+
+async function loadGateContributions() {
+    const sheetId = "1nQzkgNk31p56mM67QdUB0Rn-bGEqwbdvlKhPawRWQtQ";
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+
+    try {
+        const response = await fetch(sheetUrl);
+        const text = await response.text();
+
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        const rows = json.table.rows;
+
+        let total = 0;
+        let html = `
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contribution (LKR)</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        rows.forEach(row => {
+            const name = row.c[0]?.v || "";
+            const amount = row.c[1]?.v || 0;
+
+            total += Number(amount);
+
+            html += `
+                <tr>
+                    <td>${name}</td>
+                    <td>${amount.toLocaleString()}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody>`;
+
+        document.getElementById("gateContribTable").innerHTML = html;
+        document.getElementById("gateTotalAmount").innerText = "LKR " + total.toLocaleString();
+
+    } catch (err) {
+        console.error("Error loading gate contributions:", err);
+        document.getElementById("gateTotalAmount").innerText = "Error loading total";
+    }
+}
+
+function openGateTab() {
+    showTab("gate");
+    loadGateContributions();
+}
+
+

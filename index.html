@@ -15,7 +15,7 @@
     <div class="tabs">
         <button class="tab-button active" data-tab="home" onclick="showTab('home')">Home</button>
         <button class="tab-button" data-tab="accounts" onclick="openAccountsTab()">Accounts</button>
-        <button class="tab-button" data-tab="gate" onclick="showTab('gate')">Gate Renovation Project</button>
+        <button class="tab-button" data-tab="gate" onclick="openGateTab()">Gate Renovation Project</button>
         <button class="tab-button" data-tab="notices" onclick="showTab('notices')">Notices</button>
         <button class="tab-button" data-tab="committee" onclick="showTab('committee')">Committee & Contacts</button>
     </div>
@@ -60,17 +60,13 @@
         </div>
     </div>
 
+
     <!-- GATE PROJECT TAB -->
     <div id="gate" class="tab-content">
         <div class="glass-card">
             <h2>Gate Renovation Project</h2>
-
-            <p>
-                A heartfelt thank you to all Fernando Place residents for your generous
-                contributions and support. Because of your unity and commitment, the
-                Gate Renovation Project has become a reality. 
-            </p>
-
+    
+            <!-- Video -->
             <div class="video-container">
                 <iframe 
                     src="https://www.youtube.com/embed/Oh1XY59nE5s"
@@ -78,8 +74,38 @@
                     allowfullscreen
                 ></iframe>
             </div>
+    
+            <!-- Total Funds (auto-loaded from Google Sheet) -->
+            <div class="gate-total-box">
+                <h3>Total Funds Received</h3>
+                <p id="gateTotalAmount" class="gate-total-amount">Loading...</p>
+            </div>
+    
+            <!-- Completed Work -->
+            <h3 class="section-title">Completed Work</h3>
+            <ul class="gate-work-list">
+                <li>Old concrete pillars demolition</li>
+                <li>New concrete structure</li>
+                <li>Plastering walls, pillars and molding work</li>
+                <li>Painting the entire area</li>
+                <li>Main line and new lines wiring for decorative light, letters and bell</li>
+                <li>Stainless steel letters, backlits and fixing</li>
+                <li>Restoration of CCTV</li>
+                <li>New gate, painting and fixing</li>
+                <li>Sign boards</li>
+                <li>Plants and pots</li>
+            </ul>
+    
+            <!-- Contributions Table -->
+            <h3 class="section-title">Contributions</h3>
+            <div class="table-container">
+                <table id="gateContribTable"></table>
+            </div>
         </div>
     </div>
+
+
+
 
     <!-- NOTICES TAB -->
     <div id="notices" class="tab-content">

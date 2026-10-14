@@ -69,13 +69,20 @@ h1 {
 /* HOME IMAGE FADE-IN */
 .home-image {
     width: 100%;
-    max-width: 900px;
-    border-radius: 12px;
-    margin-top: 20px;
+    max-width: 500px;      /* smaller image */
+    border-radius: 16px;
+    margin: 20px auto;
+    display: block;
+
     opacity: 0;
     transform: translateY(10px);
     animation: fadeInImage 1.2s ease-out forwards;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
+
+
+
 
 @keyframes fadeInImage {
     from { opacity: 0; transform: translateY(10px); }
@@ -352,3 +359,16 @@ table thead th {
     background: rgba(255,255,255,0.04);
 }
 
+
+/* HOME SECTION IMPROVEMENTS */
+.home-card {
+    max-width: 700px;      /* narrower text block */
+    margin: 0 auto;        /* center it */
+    text-align: center;    /* cleaner look */
+}
+
+.home-card p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}

@@ -247,3 +247,18 @@ table thead th {
     border-radius: 18px;
 }
 
+/* NOTICE IMAGE STYLING */
+.notice-image-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.notice-image {
+    width: 100%;
+    max-width: 600px; /* keeps text sharp */
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+

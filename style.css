@@ -213,6 +213,7 @@ table thead th {
 .total-net td    { background: rgba(34,197,94,0.25); }
 .total-cum td    { background: rgba(15,118,110,0.25); }
 
+
 /* MOBILE */
 @media (max-width: 768px) {
     body { padding: 12px; }
@@ -223,7 +224,30 @@ table thead th {
     .tabs { flex-direction: column; }
     .tab-button { width: 100%; }
     table { min-width: 100%; }
+
+    /* HOME — left align on phone */
+    .home-card {
+        text-align: left;     /* stop centering text */
+        max-width: 100%;      /* full width on phone */
+        margin: 0;            /* remove auto-centering */
+    }
+
+    .home-card p {
+        font-size: 1rem;      /* slightly smaller text */
+        line-height: 1.55;
+    }
+
+    .home-image {
+        max-width: 350px;     /* smaller image on phone */
+        margin-left: 0;       /* align left */
+        margin-right: auto;   /* prevent centering */
+    }
 }
+
+
+
+
+
 
 /* VIDEO CONTAINER — stylish vertical Shorts embed */
 .video-container {

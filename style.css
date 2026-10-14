@@ -410,3 +410,77 @@ table thead th {
     margin-left: 0;
     margin-right: auto;
 }
+
+
+/* Committee Section Styling */
+.committee-card {
+    padding: 25px;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    color: #1a1a1a;
+}
+
+.committee-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.committee-subtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #555;
+}
+
+.committee-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.committee-item {
+    background: rgba(255, 255, 255, 0.55);
+    padding: 15px 18px;
+    border-radius: 10px;
+    border-left: 4px solid #4a90e2;
+    backdrop-filter: blur(6px);
+}
+
+.committee-role {
+    font-size: 20px;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 4px;
+}
+
+.committee-name {
+    font-size: 17px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.committee-house {
+    font-size: 15px;
+    color: #777;
+}
+
+.committee-contact-box {
+    margin-top: 30px;
+    padding: 18px;
+    background: rgba(240, 240, 240, 0.6);
+    border-radius: 10px;
+    border-left: 4px solid #27ae60;
+}
+
+.committee-contact-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #2c3e50;
+}
+
+.committee-email {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a73e8;
+}
